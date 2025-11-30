@@ -7,25 +7,29 @@ import "animate.css/animate.min.css";
 import { use } from "react";
 import TaskContext from "../Contexts/TasksContext";
 
-export default function AddPopup({ handleClick, animation }) {
+export default function AddAndEditPopup({
+  handleTask,
+  handleClick,
+  animation,
+  taskText,
+  taskDescription,
+  taskCategory,
+  taskDate,
+  children,
+}) {
   // Context
-  const {
-    taskTextRef,
-    taskDescriptionRef,
-    taskCategoryRef,
-    taskDateRef,
-    handleAddNewTaskClick,
-  } = use(TaskContext);
+  const { taskTextRef, taskDescriptionRef, taskCategoryRef, taskDateRef } =
+    use(TaskContext);
   // End of context
   return (
     <div
       className={`animate__animated ${animation}  w-full h-full flex items-center justify-center fixed bg-[#dedede88] backdrop-blur-[1px]`}
-      style={{ "--animate-duration": "0.5s", zIndex: 100, }}
+      style={{ "--animate-duration": "0.5s", zIndex: 100 }}
     >
       <div className="w-140 bg-white p-5 rounded-lg">
         {/* Header */}
         <div className="flex justify-between items-center mb-7">
-          <p className="font-semibold text-lg">Add New Task</p>
+          <p className="font-semibold text-lg">{children}</p>
           <button
             className="text-neutral-700 cursor-pointer"
             onClick={handleClick}
@@ -37,6 +41,7 @@ export default function AddPopup({ handleClick, animation }) {
         <form action="">
           {/* Title input */}
           <Input
+            value={taskText}
             required={true}
             placeholder="Task title"
             id="Title"
@@ -55,6 +60,7 @@ export default function AddPopup({ handleClick, animation }) {
               Description
             </label>
             <textarea
+              defaultValue={taskDescription}
               className="resize-none input-focus px-4 py-3 w-full h-20 rounded-lg duration-300 bg-[#f3f3f5]"
               id="description"
               placeholder="Task description (optional)"
@@ -64,6 +70,7 @@ export default function AddPopup({ handleClick, animation }) {
 
           {/* Category */}
           <Input
+            value={taskCategory}
             placeholder="e.g., Work, Personal"
             id="Category"
             font="font-semibold text-sm"
@@ -74,6 +81,7 @@ export default function AddPopup({ handleClick, animation }) {
 
           {/* Due date */}
           <Input
+            value={taskDate}
             id="Due Date"
             font="font-semibold text-sm"
             margin="mb-3"
@@ -82,9 +90,7 @@ export default function AddPopup({ handleClick, animation }) {
           ></Input>
 
           {/* Add task button */}
-          <ActionBtn handleClick={handleAddNewTaskClick}>
-            Add New Task
-          </ActionBtn>
+          <ActionBtn handleClick={handleTask}>{children}</ActionBtn>
         </form>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import "../../util/fontAwesome.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { use } from "react";
-import TaskContext from "@/Components/Contexts/TasksContext.jsx";
+import TaskContext from "../../Components/Contexts/TasksContext.jsx";
 export default function TaskSummaryCard({
   taskText,
   taskDescription,
@@ -13,7 +13,7 @@ export default function TaskSummaryCard({
   animation,
 }) {
   // Contexts
-  const { taskState, handleRemoveTask } = use(TaskContext);
+  const { taskState, handleRemoveTask, handleEdit } = use(TaskContext);
   // End of contexts
 
   // Component structure
@@ -79,7 +79,10 @@ export default function TaskSummaryCard({
         {/* Right side */}
         <div className="flex items-center gap-5">
           {/* Edit button */}
-          <button className="cursor-pointer p-2 hover:bg-neutral-200 duration-300 rounded-lg">
+          <button
+            className="cursor-pointer p-2 hover:bg-neutral-200 duration-300 rounded-lg"
+            onClick={() => handleEdit(id)}
+          >
             <FontAwesomeIcon icon="fa-regular fa-pen-to-square" />
           </button>
 

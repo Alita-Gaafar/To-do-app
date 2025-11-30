@@ -8,5 +8,8 @@ const TaskContext = createContext({
   handleAddNewTaskClick: null,
   taskState: null,
   handleRemoveTask: null,
+  handleAddTaskClick: null,
+  handleEditTask: null,
+  handleEdit: null,
 });
 export default TaskContext;

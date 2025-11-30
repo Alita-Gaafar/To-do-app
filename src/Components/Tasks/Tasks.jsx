@@ -9,8 +9,9 @@ import CompletedTasks from "./FilterTasks/CompletedTasks";
 import PendingTasks from "./FilterTasks/PendingTasks";
 import TodayTasks from "./FilterTasks/TodayTasks";
 import { taskCards, taskFilterBtns } from "../../util/data";
-import AddPopup from "./AddPopup";
+import AddAndEditPopup from "./AddAndEditPopup";
 import TaskContext from "../Contexts/TasksContext";
+import QUOTE from "@/util/quotes";
 
 // Structure
 export default function DashBoard() {
@@ -25,8 +26,12 @@ export default function DashBoard() {
   const [activeBtn, setActiveBtn] = useState("All"); // Active filter tasks button state
 
   const [tasks, setTasks] = useState([]); // Tasks state
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState({
+    addPopup: false,
+    editPopup: false,
+  });
   const [showAnimation, setShowAnimation] = useState(false);
+  const [editingId, setEditingId] = useState();
   // End of states
 
   // Variables
@@ -35,6 +40,7 @@ export default function DashBoard() {
   const numberOfTasks = tasks.length;
 
   // Completed tasks
+
   const completedTasks = tasks.filter((task) => task.completed);
   const numberOfCompletedTasks = tasks.filter((task) => task.completed).length;
 
@@ -62,18 +68,70 @@ export default function DashBoard() {
     setActiveBtn(sectionBtn);
   }
 
-  // Show popup
+  // Show add task popup
   function handleAddTaskClick() {
     setShowAnimation(true);
-    setShowPopup(true);
+    setShowPopup((prev) => ({
+      ...prev,
+      addPopup: true,
+    }));
+  }
+
+  // Show edit task popup and set the editing id
+  function handleEditClick(id) {
+    // Set editing id to clicked task id
+    setEditingId(id);
+
+    // Show animation on opening popup
+    setShowAnimation(true);
+
+    // Show popup
+    setShowPopup((prev) => ({
+      ...prev,
+      editPopup: true,
+    }));
   }
 
   // Hide Popup
   function handleCancelBtnClick() {
     setShowAnimation(false);
     setTimeout(() => {
-      setShowPopup(false);
+      setShowPopup(() => ({
+        addPopup: false,
+        editPopup: false,
+      }));
     }, 500);
+  }
+
+  // Edit task
+  function handleEditTaskClick(e) {
+    e.preventDefault();
+
+    // Hide animation on closing popup
+    setShowAnimation(false);
+
+    // Close popup
+    setTimeout(() => {
+      setShowPopup((prev) => ({
+        ...prev,
+        editPopup: false,
+      }));
+    }, 500);
+
+    // Edit task based on id
+    setTasks((prevTasks) => {
+      return prevTasks.map((task) => {
+        if (task.id === editingId) {
+          return {
+            ...task,
+            taskText: taskText.current.value,
+            taskDescription: taskDescription.current.value,
+            taskCategory: taskCategory.current.value,
+            taskDate: taskDate.current.value,
+          };
+        } else return task;
+      });
+    });
   }
 
   // Add tasks
@@ -81,7 +139,7 @@ export default function DashBoard() {
     // No form actions onClicking the button
     e.preventDefault();
 
-    // Hide the add task popup
+    // Hide the add task popup after 0.5 second
     setShowAnimation(false);
     setTimeout(() => {
       setShowPopup(false);
@@ -148,20 +206,47 @@ export default function DashBoard() {
     handleAddNewTaskClick: handleAddNewTaskClick,
     taskState: taskState,
     handleRemoveTask: handleRemoveTask,
+    handleAddTaskClick: handleAddTaskClick,
+    handleEditTask: handleEditTaskClick,
+    handleEdit: handleEditClick,
   };
   // End of context values
+
+  // Testing
+
+  // End of testing
 
   // Component structure
   return (
     <>
       {/* Add task popup */}
       <TaskContext value={TaskContextVal}>
-        {showPopup && (
-          <AddPopup
+        {showPopup.addPopup ? (
+          <AddAndEditPopup
+            handleTask={handleAddNewTaskClick}
             handleClick={handleCancelBtnClick}
             animation={showAnimation ? "animate__fadeIn" : "animate__fadeOut"}
-          ></AddPopup>
-        )}
+          >
+            Add New Task
+          </AddAndEditPopup>
+        ) : // Edit task popup
+        showPopup.editPopup ? (
+          <AddAndEditPopup
+            taskText={tasks.find((task) => task.id === editingId)?.taskText}
+            taskDescription={
+              tasks.find((task) => task.id === editingId)?.taskDescription
+            }
+            taskCategory={
+              tasks.find((task) => task.id === editingId)?.taskCategory
+            }
+            taskDate={tasks.find((task) => task.id === editingId)?.taskDate}
+            handleTask={handleEditTaskClick}
+            handleClick={handleCancelBtnClick}
+            animation={showAnimation ? "animate__fadeIn" : "animate__fadeOut"}
+          >
+            Edit Task
+          </AddAndEditPopup>
+        ) : undefined}
       </TaskContext>
 
       <PagesContainer>
@@ -210,7 +295,7 @@ export default function DashBoard() {
 
         {/* Quote */}
         <div className="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-7 my-5">
-          <i>"The secret of getting ahead is getting started." — Mark Twain</i>
+          <i>{QUOTE}</i>
         </div>
 
         {/* (AllTasks or CompletedTask or PendingTasks or TodayTasks) page */}
