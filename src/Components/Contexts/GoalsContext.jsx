@@ -52,7 +52,6 @@ export default function GoalsWrapper({ children }) {
 
   // -------------------- Variables --------------------
 
-  // Random number
   const randomNumber = Date.now() * Math.random(); // Random number
 
   // All goals

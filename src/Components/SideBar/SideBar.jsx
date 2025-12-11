@@ -1,5 +1,5 @@
 import Icon from "../AuthForm/Icon";
-import NavButton, { MotionNavButton } from "./NavButton";
+import NavButton from "./NavButton";
 import { navBtns } from "@/util/data";
 import { motion } from "motion/react";
 
@@ -34,7 +34,7 @@ export default function SideBar({ activePage, onLogoutClick }) {
           {/* Tasks button */}
           {navBtns.map((btn) => {
             return (
-              <MotionNavButton
+              <NavButton
                 key={btn.id}
                 // Button text
                 text={btn.btnText}
@@ -42,6 +42,8 @@ export default function SideBar({ activePage, onLogoutClick }) {
                 fa={btn.faIcon}
                 // Colors of the buttons
                 textColor={activePage[btn.activePage] ? "#fff" : "#444"}
+                // Background colors of the buttons
+                bgColor={activePage[btn.activePage] && "bg-emerald-500"}
                 // Colors of the icons
                 iconColors={
                   activePage[btn.activePage]
@@ -50,19 +52,7 @@ export default function SideBar({ activePage, onLogoutClick }) {
                 }
                 // Active page
                 activePage={btn.activePage}
-              >
-                {activePage[btn.activePage] && (
-                  <motion.div
-                    layoutId="moving-bg"
-                    className="absolute inset-0 rounded-lg bg-emerald-500"
-                    transition={{
-                      type: "spring",
-                      stiffness: 350,
-                      damping: 30,
-                    }}
-                  />
-                )}
-              </MotionNavButton>
+              ></NavButton>
             );
           })}
         </ul>

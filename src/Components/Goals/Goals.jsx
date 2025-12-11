@@ -5,7 +5,7 @@ import { GoalsCtx } from "../Contexts/GoalsContext";
 import { goalCards } from "@/util/data";
 import AddButton from "../AddButton";
 import { MotionGoalCard } from "./GoalCard";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import CardStyle from "../CardStyle";
 import GoalPopup from "./GoalPopup";
 
@@ -40,7 +40,9 @@ export default function Goals() {
               goals.find((goal) => goal.key === editingId)?.description
             }
             goalDate={goals.find((goal) => goal.key === editingId)?.date}
-            goalSubTasks={goals.find((goal) => goal.key === editingId)?.subTasks}
+            goalSubTasks={
+              goals.find((goal) => goal.key === editingId)?.subTasks
+            }
           >
             Edit Goal
           </GoalPopup>
@@ -60,6 +62,7 @@ export default function Goals() {
           all={numberOfAllGoals}
           avgProgress={avgProgress}
           completed={numberOfCompletedGoals}
+          title="Goals"
         >
           Set and achieve your long-term objectives
         </TopSection>

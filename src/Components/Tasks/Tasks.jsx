@@ -66,6 +66,7 @@ export default function Tasks() {
           all={numberOfTasks}
           completed={numberOfCompletedTasks}
           pending={numberOfPendingTasks}
+          title="Tasks"
         >
           Stay organized and productive
         </TopSection>

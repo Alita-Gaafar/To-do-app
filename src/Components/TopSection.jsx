@@ -8,11 +8,14 @@ export default function TopSection({
   completed,
   pending,
   avgProgress,
+  title,
+  streaks,
+  successRate
 }) {
   return (
     <div className="mb-5">
       {/* Header title */}
-      <Header>{children}</Header>
+      <Header title={title}>{children}</Header>
 
       {/* Stats cards */}
       <div className="flex justify-between gap-4">
@@ -30,6 +33,10 @@ export default function TopSection({
                   ? completed
                   : card.condition === "progress"
                   ? `${avgProgress}%`
+                  : card.condition === "streaks"
+                  ? streaks
+                  : card.condition === "rate"
+                  ? `${successRate}%`
                   : pending
               }
             >

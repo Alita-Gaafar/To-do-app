@@ -52,6 +52,33 @@ export const goalCards = [
   },
 ];
 
+export const habitCards = [
+  {
+    id: 1,
+    condition: "total",
+    title: "Total Habits",
+    icon: "fa-arrow-trend-up",
+    iconColor: "text-emerald-500",
+    bgColor: "",
+  },
+  {
+    id: 2,
+    condition: "streaks",
+    title: "Total Streaks",
+    icon: "fa-fire",
+    iconColor: "text-amber-500",
+    bgColor: "",
+  },
+  {
+    id: 3,
+    condition: "rate",
+    title: "Avg Success Rate",
+    icon: "fa-check",
+    iconColor: "text-emerald-500",
+    bgColor: "bg-emerald-100",
+  },
+];
+
 export const taskFilterBtns = ["All", "Today", "Completed", "Pending"];
 
 export const navBtns = [

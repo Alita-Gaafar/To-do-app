@@ -9,6 +9,7 @@ import Profile from "./Profile/Profile.jsx";
 import NavBtnCtx from "./Contexts/NavBtnCtx.jsx";
 import { TaskWrapper } from "./Contexts/TasksContext";
 import GoalsWrapper from "./Contexts/GoalsContext";
+import HabitsWrapper from "./Contexts/HabitsCtx";
 
 function App() {
   // States
@@ -85,7 +86,7 @@ function App() {
         <GoalsWrapper>{activePage.goals && <Goals></Goals>}</GoalsWrapper>
 
         {/* Habits */}
-        {activePage.habits && <Habits></Habits>}
+        <HabitsWrapper>{activePage.habits && <Habits></Habits>}</HabitsWrapper>
 
         {/* Profile */}
         {activePage.profile && <Profile></Profile>}

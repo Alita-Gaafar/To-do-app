@@ -13,7 +13,6 @@ export default function GoalPopup({
   goalText,
   goalDescription,
   goalDate,
-  goalSubTasks,
   children,
 }) {
   // -------------------- Contexts --------------------

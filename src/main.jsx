@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import 'normalize.css';
 import './index.css'
 import './checkbox.css'
+import './chart.css'
 import App from './Components/App.jsx'
 
 createRoot(document.getElementById('root')).render(
