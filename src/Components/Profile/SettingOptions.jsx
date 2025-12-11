@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CardStyle from "../CardStyle";
+import { use } from "react";
 import ThemeToggle from "../ThemeToggle";
-import { useTheme } from "../ThemeProvider";
+import { ProfileCtx } from "../Contexts/ProfileCtx";
+import { Switch } from "@/components/ui/switch";
 
-export default function SettingOptions({ title, description, icon, handleClick }) {
-  // -------------------- States --------------------
-  const { theme, toggleTheme } = useTheme({});
-  // End of states
+export default function SettingOptions({ title, description, icon }) {
+  // -------------------- Contexts --------------------
+  const { handleSwitchNotification } = use(ProfileCtx);
+  // End of contexts
 
   // -------------------- Component structure --------------------
   return (
@@ -23,7 +23,11 @@ export default function SettingOptions({ title, description, icon, handleClick }
 
         {/* Theme button */}
         <div className="flex-1">
-          <ThemeToggle handleClick={handleClick}></ThemeToggle>
+          {title === "Theme" ? (
+            <ThemeToggle></ThemeToggle>
+          ) : (
+            <Switch onCheckedChange={handleSwitchNotification} />
+          )}
         </div>
       </div>
     </>

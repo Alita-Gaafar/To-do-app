@@ -1,18 +1,24 @@
+import { use } from "react";
 import { useTheme } from "./ThemeProvider";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast } from "sonner";
+import { ProfileCtx } from "./Contexts/ProfileCtx";
 
-export default function ThemeToggle({ handleClick }) {
+export default function ThemeToggle({}) {
+  // -------------------- States --------------------
   const { theme, toggleTheme } = useTheme();
+  // End of states
 
+  // -------------------- Contexts --------------------
+  const { handleSwitchTheme } = use(ProfileCtx);
+  // End of contexts
+
+  // -------------------- Component structure --------------------
   return (
     <div className="flex items-center space-x-2">
       <Switch
         id="dark-mode"
         onCheckedChange={toggleTheme}
-        onClick={handleClick}
+        onClick={() => handleSwitchTheme(theme)}
       />
     </div>
   );

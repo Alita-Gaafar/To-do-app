@@ -13,7 +13,7 @@ export default function ProfileInfo() {
   // End of states
 
   // -------------------- Contexts --------------------
-  const { shortcutName, profile, handleSwitchTheme,handleSwitchNotification } = use(ProfileCtx);
+  const { shortcutName, profile } = use(ProfileCtx);
   // End of contexts
 
   // -------------------- Component structure --------------------
@@ -54,7 +54,6 @@ export default function ProfileInfo() {
               />
             )
           }
-          handleClick={() => handleSwitchTheme(theme)}
         />
 
         {/* Notifications */}
@@ -67,7 +66,6 @@ export default function ProfileInfo() {
               icon="fa-regular fa-bell"
             />
           }
-          handleClick={handleSwitchNotification}
         />
       </CardStyle>
     </>
