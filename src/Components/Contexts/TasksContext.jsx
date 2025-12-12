@@ -231,7 +231,7 @@ export function TaskWrapper({ children }) {
     });
   }
 
-  // End of functions
+  // End of functions  
 
   // -------------------- Context values --------------------
   const TaskContextVal = {

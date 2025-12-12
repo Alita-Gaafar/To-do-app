@@ -18,7 +18,8 @@ export default function Profile() {
 
       {/* Profile info */}
       <ProfileInfo></ProfileInfo>
-      {/* <ThemeToggle></ThemeToggle> */}
+      
+      {/*  */}
     </PagesContainer>
   );
 }

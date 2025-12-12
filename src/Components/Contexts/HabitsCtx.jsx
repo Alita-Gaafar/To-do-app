@@ -24,6 +24,9 @@ export default function HabitsWrapper({ children }) {
 
   const [frequency, setFrequency] = useState();
 
+  // const [habits, setHabits] = useState(
+  //   JSON.parse(localStorage.getItem("habits")) || []
+  // );
   const [habits, setHabits] = useState([]);
 
   // End of states
@@ -152,6 +155,7 @@ export default function HabitsWrapper({ children }) {
 
     setTimeout(() => {
       setFrequency("");
+      // localStorage.setItem("habits", JSON.stringify(habits));
     }, 1);
 
     // Set add habits state

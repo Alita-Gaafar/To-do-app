@@ -14,6 +14,8 @@ import ThemeProvider from "./ThemeProvider";
 import ThemeToggle from "./ThemeToggle";
 import ProfileWrapper from "./Contexts/ProfileCtx";
 
+const DATE = new Date();
+
 function App() {
   // States
   const [activeForm, setActiveForm] = useState("login");
@@ -24,10 +26,17 @@ function App() {
     habits: false,
     profile: false,
   });
+
+  const [memberHistory, setMemberHistory] = useState();
   // End of states
 
   // Functions
 
+  // Set member history after sign up
+  function handleSignUpClick() {
+    setMemberHistory(DATE);
+    setActiveForm("login");
+  }
   // Display login or sign up page
   function handleActiveClick(pageName) {
     setActiveForm(pageName.toLowerCase());
@@ -56,6 +65,8 @@ function App() {
     onActiveFormClick: handleActiveClick,
     activeAuth: activeForm,
     activePage: displayPage,
+    handleSignUp: handleSignUpClick,
+    memberHistory: memberHistory,
   };
 
   // Nav buttons context value
@@ -68,37 +79,39 @@ function App() {
   return (
     <>
       <ThemeProvider>
+        {/* Side bar */}
+        <NavBtnCtx value={navBtnCtxValue}>
+          {!activePage.authPage && (
+            <SideBar activePage={activePage} onLogoutClick={displayPage} />
+          )}
+        </NavBtnCtx>
+
         {/* Authentication page */}
         <AuthButtonsContext value={authCtxValue}>
           {activePage.authPage && <AuthForm />}
-        </AuthButtonsContext>
-
-        <section className="flex dark:bg-amber-400">
-          {/* Side bar */}
-          <NavBtnCtx value={navBtnCtxValue}>
-            {!activePage.authPage && (
-              <SideBar activePage={activePage} onLogoutClick={displayPage} />
-            )}
-          </NavBtnCtx>
 
           {/* Display the correct page based on a state each one alone to avoid unmounting components (which nav button was clicked) */}
 
           {/* Tasks */}
-          <TaskWrapper>{activePage.tasks && <Tasks></Tasks>}</TaskWrapper>
+          <TaskWrapper>
+            {activePage.tasks && <Tasks></Tasks>}
 
-          {/* Goals */}
-          <GoalsWrapper>{activePage.goals && <Goals></Goals>}</GoalsWrapper>
+            {/* Profile */}
+            <GoalsWrapper>
+              <HabitsWrapper>
+                {activePage.habits && <Habits></Habits>}
+                <ProfileWrapper>
+                  {activePage.profile && <Profile></Profile>}
+                </ProfileWrapper>
+              </HabitsWrapper>
 
-          {/* Habits */}
-          <HabitsWrapper>
-            {activePage.habits && <Habits></Habits>}
-          </HabitsWrapper>
+              {/* Goals */}
+              {activePage.goals && <Goals></Goals>}
+            </GoalsWrapper>
+          </TaskWrapper>
+        </AuthButtonsContext>
 
-          {/* Profile */}
-          <ProfileWrapper>
-            {activePage.profile && <Profile></Profile>}
-          </ProfileWrapper>
-        </section>
+        {/* Habits */}
       </ThemeProvider>
     </>
   );

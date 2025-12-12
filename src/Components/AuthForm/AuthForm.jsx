@@ -3,7 +3,7 @@ import Background from "./Background";
 import Icon from "./Icon";
 import Button from "./Button";
 
-import { use, useRef } from "react";
+import { use, useRef, useState } from "react";
 import AuthButtonsContext from "../Contexts/AuthButtonsContext";
 import ActionBtn from "../ActionBtn";
 
@@ -18,10 +18,13 @@ export default function Login() {
   // Refs
   const emailInput = useRef();
   const passwordInput = useRef();
+  const createEmailInput = useRef();
+  const createPasswordInput = useRef();
+  const createNameInput = useRef();
   // End of refs
 
   // Context
-  const { activeAuth, activePage } = use(AuthButtonsContext);
+  const { activeAuth, activePage, handleSignUp } = use(AuthButtonsContext);
   // End of context
 
   // Functions
@@ -84,12 +87,15 @@ export default function Login() {
     // }
 
     // Check email + password
-    //emailValue === EMAIL && passwordValue === PASSWORD
+    // emailValue === EMAIL && passwordValue === PASSWORD
     else if (emailValue === EMAIL) {
       activePage("tasks");
+
       return;
     }
   }
+
+  
 
   // End of functions
 
@@ -162,6 +168,7 @@ export default function Login() {
               <>
                 {/* Full name */}
                 <Input
+                  ref={createNameInput}
                   type={"text"}
                   id={"Full Name"}
                   placeholder={"name"}
@@ -171,6 +178,7 @@ export default function Login() {
 
                 {/* Email */}
                 <Input
+                  ref={createEmailInput}
                   type={"email"}
                   id={"Email"}
                   required={true}
@@ -180,6 +188,7 @@ export default function Login() {
 
                 {/* Password */}
                 <Input
+                  ref={createPasswordInput}
                   type={"password"}
                   id={"Password"}
                   placeholder={"password"}
@@ -219,7 +228,7 @@ export default function Login() {
             {/* Sign in button */}
             <ActionBtn
               handleClick={
-                activeAuth === "login" ? handleSignInClick : undefined
+                activeAuth === "login" ? handleSignInClick : handleSignUp
               }
             >
               {/* If login page The button text is Sign In else Create Account */}

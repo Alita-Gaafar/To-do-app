@@ -18,7 +18,11 @@ export default function TodayTasks() {
           return (
             <MotionTaskCard
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={
+                task.completed
+                  ? { opacity: 0.6, scale: 1 }
+                  : { opacity: 1, scale: 1 }
+              }
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: "linear" }}
               key={task.id}
