@@ -1,5 +1,5 @@
 import ActionBtn from "../ActionBtn";
-import Input from "../AuthForm/Input";
+import Input from "../Input";
 import "../../util/fontAwesome.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // index.js or main.jsx
@@ -37,15 +37,15 @@ export default function TaskPopup({
       className={`w-full h-full flex items-center justify-center fixed bg-[#dedede88] backdrop-blur-[1px]`}
       style={{ zIndex: 100 }}
     >
-      <div className="w-140 bg-white p-5 rounded-lg">
+      <div className="w-140 bg-white p-8 rounded-lg dark:bg-black">
         {/* Header */}
         <div className="flex justify-between items-center mb-7">
-          <p className="font-semibold text-lg">{children}</p>
+          <p className="font-semibold text-lg dark:text-white">{children}</p>
           <button
             className="text-neutral-700 cursor-pointer"
             onClick={handleCancelBtnClick}
           >
-            <FontAwesomeIcon icon="fa-solid fa-x" size="sm" />
+            <FontAwesomeIcon className="dark:text-[var(--dark-text-primary-color)]" icon="fa-solid fa-x" size="sm" />
           </button>
         </div>
 
@@ -57,7 +57,6 @@ export default function TaskPopup({
             placeholder="Task title"
             id="Title"
             font="font-semibold text-sm"
-            margin="mb-3"
             type="text"
             ref={taskTextRef}
           ></Input>
@@ -65,14 +64,14 @@ export default function TaskPopup({
           {/* Description */}
           <div className="mb-5">
             <label
-              className="block mb-3 font-semibold text-sm"
+              className="block mb-1 font-semibold text-sm dark:text-white"
               htmlFor="description"
             >
               Description
             </label>
             <textarea
               defaultValue={taskDescription}
-              className="resize-none input-focus px-4 py-3 w-full h-20 rounded-lg duration-300 bg-[#f3f3f5]"
+              className="resize-none input-focus px-4 py-3 w-full h-20 rounded-lg duration-300 bg-[#f3f3f5] dark:bg-neutral-900 dark:text-[var(--dark-text-primary-color)]"
               id="description"
               placeholder="Task description (optional)"
               ref={taskDescriptionRef}
@@ -85,7 +84,6 @@ export default function TaskPopup({
             placeholder="e.g., Work, Personal"
             id="Category"
             font="font-semibold text-sm"
-            margin="mb-3"
             type="text"
             ref={taskCategoryRef}
           ></Input>
@@ -95,7 +93,6 @@ export default function TaskPopup({
             value={taskDate}
             id="Due Date"
             font="font-semibold text-sm"
-            margin="mb-3"
             type="date"
             ref={taskDateRef}
           ></Input>

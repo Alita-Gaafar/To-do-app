@@ -27,6 +27,7 @@ export default function Tasks() {
   } = use(TaskContext);
 
   // Testing
+  console.log(tasks);
 
   // End of testing
 
@@ -85,8 +86,8 @@ export default function Tasks() {
         </div>
 
         {/* Quote */}
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-7 mt-5">
-          <i>{QUOTE}</i>
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-7 mt-5 dark:border-emerald-800 dark:bg-gradient-to-r dark:from-emerald-950 dark:to-teal-950 dark:text-[var(--dark-text-primary-color)]">
+          <i>"{QUOTE}"</i>
         </div>
 
         {/* (AllTasks or CompletedTask or PendingTasks or TodayTasks) page */}

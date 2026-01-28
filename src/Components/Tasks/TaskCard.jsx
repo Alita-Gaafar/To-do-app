@@ -34,7 +34,7 @@ export default function TaskCard({
             <Checkbox
               checked={completed}
               id="terms"
-              className="cursor-pointer"
+              className="cursor-pointer dark:border-[var(--dark-border-primary-color)]"
               onCheckedChange={(checked) => {
                 checked ? taskState(id, true) : taskState(id, false);
               }}
@@ -47,28 +47,28 @@ export default function TaskCard({
             <p
               className={`${
                 completed && "line-through"
-              } mb-2 text-lg leading-5`}
+              } mb-2 text-lg leading-5 dark:text-white`}
             >
               {taskText}
             </p>
 
             {/* Task description */}
             {taskDescription && (
-              <div className="text-neutral-600 mb-2">{taskDescription}</div>
+              <div className="text-neutral-600 mb-2 dark:text-[var(--dark-text-primary-color)]">{taskDescription}</div>
             )}
 
             {/* Task Category and date */}
             <div className="flex items-center gap-2">
               {/* Category */}
               {taskCategory && (
-                <div className="px-2 py-2 rounded-sm bg-emerald-100 text-emerald-700">
+                <div className="px-2 py-2 rounded-sm bg-emerald-100 text-emerald-700 dark:text-emerald-300 dark:bg-emerald-900">
                   {taskCategory}
                 </div>
               )}
 
               {/* Date */}
               {taskDate && (
-                <div className="px-2 py-2 rounded-sm bg-amber-100 text-amber-700 flex items-center gap-1">
+                <div className="px-2 py-2 rounded-sm bg-amber-100 text-amber-700 flex items-center gap-1 dark:bg-amber-900 dark:text-amber-300">
                   <FontAwesomeIcon icon="fa-regular fa-calendar" />
                   <span>{taskDate}</span>
                 </div>

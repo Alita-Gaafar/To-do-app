@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Input from "../Input";
 import Background from "./Background";
 import Icon from "./Icon";
 import Button from "./Button";
@@ -94,8 +94,6 @@ export default function Login() {
       return;
     }
   }
-
-  
 
   // End of functions
 

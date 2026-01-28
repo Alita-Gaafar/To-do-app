@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { use, useState } from "react";
 import { HabitsCtx } from "../Contexts/HabitsCtx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Input from "../AuthForm/Input";
+import Input from "../Input";
 import ActionBtn from "../ActionBtn";
 import {
   Select,

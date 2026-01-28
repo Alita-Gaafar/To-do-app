@@ -77,32 +77,46 @@ export default function HabitsWrapper({ children }) {
   // Set habit as completed today
   function handleTaskCompletedClick(id) {
     // If date changed (day is gone) open the ability to set habit as completed
-
-    // setHabits((prevHabits) => {
-    //   return prevHabits.map((habit) => {
-    //     if (habit.day !== DATE.getDate()) {
-    //       return { ...habit, completedAbility: true, };
-    //     }
-    //     return habit;
-    //   });
-    // });
-
     // Increase the streak and the success progress
+    let completedHabit = null;
+    let nonCompletedHabit = null;
     setHabits((prevHabits) => {
       return prevHabits.map((habit) => {
+        // If the id of the clicked habit equals the id of an habit checks if the habit date not equals the day date
         if (habit.id === id) {
           if (habit.day !== DATE.getDate()) {
-            return {
+            completedHabit = {
               ...habit,
               streaks: habit.streaks + 1,
               successRate: habit.successRate + 5,
               day: DATE.getDate(),
             };
-          }
+            return completedHabit;
+          } else nonCompletedHabit = { ...habit };
         }
         return habit;
       });
     });
+
+    // If the streaks increased
+    if (completedHabit) {
+      toast.success(
+        `${completedHabit.title} completed! Streak: ${completedHabit.streaks}`,
+        {
+          duration: 5000,
+          position: "bottom-right",
+          closeButton: true,
+        }
+      );
+
+      // If the streaks already increased in a day
+    } else if (nonCompletedHabit) {
+      toast.success(`Already completed! Streak: ${nonCompletedHabit.streaks}`, {
+        duration: 5000,
+        position: "bottom-right",
+        closeButton: true,
+      });
+    }
   }
 
   // Add a new habit

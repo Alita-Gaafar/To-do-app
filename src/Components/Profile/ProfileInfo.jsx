@@ -23,8 +23,7 @@ export default function ProfileInfo() {
   const { totalStreaks } = use(HabitsCtx);
 
   const { memberHistory } = use(AuthButtonsContext);
-  console.log(totalStreaks);
-  
+
   // End of contexts
 
   // -------------------- Component structure --------------------

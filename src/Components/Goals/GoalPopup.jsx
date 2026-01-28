@@ -1,5 +1,5 @@
 import ActionBtn from "../ActionBtn";
-import Input from "../AuthForm/Input";
+import Input from "../Input";
 import "../../util/fontAwesome.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // index.js or main.jsx

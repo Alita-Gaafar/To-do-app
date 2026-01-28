@@ -6,6 +6,9 @@
 :root {
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --dark-primary-bg: black;
+  --dark-text-primary-color: #d4d4d4;
+  --dark-border-primary-color: #404040;
   --btn-primary-bg: black;
   --btn-hover-bg: #000000e0;
   --radius: 0.625rem;

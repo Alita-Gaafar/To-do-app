@@ -1,7 +1,7 @@
 import { use } from "react";
 import ActionBtn from "../ActionBtn";
 import { ProfileCtx } from "../Contexts/ProfileCtx";
-import Input from "../AuthForm/Input";
+import Input from "../Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function EditProfile() {
