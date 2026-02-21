@@ -8,6 +8,8 @@ import ActionBtn from "../buttons/ActionBtn";
 
 // React router
 import { useNavigate } from "react-router";
+import { use } from "react";
+import { AppCtx } from "../contexts/AppCtx";
 
 // Variables
 const EMAIL = "abdohmahmoud28@gmail.com";
@@ -18,16 +20,18 @@ export default function Login() {
   const navigate = useNavigate();
   // End of react hooks
 
+  // Ctx
+  const { rememberMe } = use(AppCtx);
+  // End of ctx
+
   // Functions
 
   // Handle sign in click
   function handleSignIn(e) {
     e.preventDefault(); // stop default submit
 
-    const fd = new FormData(e.target);
-
-    const signinEmail = fd.get("email");
-    const signinPassword = fd.get("password");
+    localStorage.setItem("token", "po");
+    localStorage.setItem("remember", rememberMe);
 
     navigate("/tasks?filter=all", { replace: true });
   }

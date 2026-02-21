@@ -1,82 +1,110 @@
-// Hooks
-import { useState } from "react";
-
 // Comps
 import Tasks from "./pages/Tasks";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 
+// Pages
+import Goals from "./pages/Goals";
+import Habits from "./pages/Habits";
+import Profile from "./pages/Profile";
+
 // Ctx
-import NavBtnCtx from "./components/contexts/NavBtnCtx";
 import { TaskWrapper } from "./components/contexts/TasksContext";
 import GoalsWrapper from "./components/contexts/GoalsContext";
-import HabitsWrapper, { HabitsCtx } from "./components/contexts/HabitsCtx";
+import HabitsWrapper from "./components/contexts/HabitsCtx";
 import ProfileWrapper from "./components/contexts/ProfileCtx";
-
-// Theme
-import ThemeProvider from "./Components/ThemeProvider";
 
 // Shadcn
 import { Toaster } from "./Components/ui/sonner";
 
 // React router
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import TodayTasks from "./components/tasks/filtered tasks/TodayTasks";
-import AllTasks from "./components/tasks/filtered tasks/AllTasks";
-import CompletedTasks from "./components/tasks/filtered tasks/CompletedTasks";
-import PendingTasks from "./components/tasks/filtered tasks/PendingTasks";
-import Goals from "./pages/Goals";
-import Habits from "./pages/Habits";
+import ThemeProvider from "./components/ThemeProvider";
+import ProtectedRoute from "./components/protection/ProtectedRoute";
+import PublicOnlyRoute from "./components/protection/PublicOnlyRoute";
+
+// Hooks
+import { use } from "react";
+
+// Ctx
+import AppWrapper from "./components/contexts/AppCtx";
 
 function App() {
-  // States
+  // Variables
+  const isToken = localStorage.getItem("token");
 
-  // End of states
+  const isRemember = localStorage.getItem("remember") === "true";
 
-  // Functions
-
-  // End of functions
-
-  // End of context values
-
+  // End of variables
   // Component structure
   return (
-    <ThemeProvider>
-      <TaskWrapper>
-        <GoalsWrapper>
-          <HabitsWrapper>
-            <Routes>
-              {/* Auth */}
-              <Route path="/" element={<AuthLayout />}>
-                <Route index element={<Login />} />
-                <Route path="signup" element={<Signup />} />
-              </Route>
+    <>
+      <ThemeProvider>
+        <AppWrapper>
+          <TaskWrapper>
+            <GoalsWrapper>
+              <HabitsWrapper>
+                <ProfileWrapper>
+                  <Routes>
+                    {/* Default route */}
+                    <Route
+                      path="/"
+                      element={
+                        isToken && isRemember ? (
+                          <Navigate to="/tasks" replace />
+                        ) : (
+                          <Navigate to="/login" replace />
+                        )
+                      }
+                    />
 
-              {/* Tasks */}
-              <Route path="/tasks" element={<MainLayout />}>
-                <Route index element={<Tasks />}></Route>
-              </Route>
+                    {/* Auth layout */}
+                    <Route element={<AuthLayout />}>
+                      <Route
+                        path="/login"
+                        element={
+                          <PublicOnlyRoute>
+                            <Login />
+                          </PublicOnlyRoute>
+                        }
+                      />
+                      <Route
+                        path="/signup"
+                        element={
+                          <PublicOnlyRoute>
+                            <Signup />
+                          </PublicOnlyRoute>
+                        }
+                      />
+                    </Route>
 
-              {/* Goals */}
-              <Route path="/goals" element={<MainLayout />}>
-                <Route index element={<Goals />}></Route>
-              </Route>
-
-              {/* Habits */}
-              <Route path="/habits" element={<MainLayout />}>
-                <Route index element={<Habits />}></Route>
-              </Route>
-            </Routes>
-          </HabitsWrapper>
-        </GoalsWrapper>
-      </TaskWrapper>
+                    {/* Main layout (protected) */}
+                    <Route
+                      element={
+                        <ProtectedRoute>
+                          <MainLayout />
+                        </ProtectedRoute>
+                      }
+                    >
+                      <Route path="/tasks" element={<Tasks />} />
+                      <Route path="/goals" element={<Goals />} />
+                      <Route path="/habits" element={<Habits />} />
+                      <Route path="/profile" element={<Profile />} />
+                    </Route>
+                  </Routes>
+                </ProfileWrapper>
+              </HabitsWrapper>
+            </GoalsWrapper>
+          </TaskWrapper>
+        </AppWrapper>
+      </ThemeProvider>
 
       <Toaster />
-    </ThemeProvider>
+    </>
   );
 }
 

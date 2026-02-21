@@ -21,7 +21,7 @@ export default function Signup() {
     const signupEmail = fd.get("signup-email");
     const signupPassword = fd.get("signup-password");
 
-    navigate("/");
+    navigate("/login");
   }
   // End of functions
   return (

@@ -1,16 +1,12 @@
-import { Toaster } from "sonner";
-import Header from "../Header";
-import PagesContainer from "../PagesContainer";
-import ProfileInfo from "./ProfileInfo";
+// Comps
+import Header from "@/components/Header";
+import ProfileInfo from "@/components/profile/ProfileInfo";
+import PagesContainer from "@/components/styling components/PagesContainer";
+import ThemeProvider from "@/components/ThemeProvider";
 
 export default function Profile() {
   return (
-    <PagesContainer padding={"200px"}>
-      {/* Notification */}
-      <div>
-        <Toaster />
-      </div>
-
+    <PagesContainer>
       {/* Header */}
       <Header title="Profile">
         Manage your account settings and preferences
@@ -18,7 +14,7 @@ export default function Profile() {
 
       {/* Profile info */}
       <ProfileInfo></ProfileInfo>
-      
+
       {/*  */}
     </PagesContainer>
   );

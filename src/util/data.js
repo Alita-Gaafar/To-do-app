@@ -155,7 +155,7 @@ export const authButtons = [
   {
     id: 0,
     title: "Login",
-    path: "",
+    path: "login",
   },
   {
     id: 1,

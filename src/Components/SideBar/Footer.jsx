@@ -5,7 +5,10 @@ export default function Footer() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    navigate("/", { replace: true });
+    navigate("/login");
+    localStorage.removeItem("token");
+
+    localStorage.setItem("remember", "false");
   }
 
   return (

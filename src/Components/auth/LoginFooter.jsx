@@ -1,11 +1,24 @@
+import { use } from "react";
+import { AppCtx } from "../contexts/AppCtx";
+
 export default function LoginFooter() {
+  // Ctx
+
+  // End of ctx
+  const { rememberMe, setRememberMe } = use(AppCtx);
+  // Comp structure
   return (
     <div className="flex justify-between mb-5">
       {/* Remember me button */}
       <div className="">
         {/* Modern checkbox */}
         <div className="checkbox-wrapper-19 flex items-center">
-          <input type="checkbox" id="cbtest-19" />
+          <input
+            type="checkbox"
+            id="cbtest-19"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
           <label htmlFor="cbtest-19" className="check-box"></label>
           <label htmlFor="cbtest-19" className="ms-2 cursor-pointer font-bold">
             Remember me
