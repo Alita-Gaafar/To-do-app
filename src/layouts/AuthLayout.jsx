@@ -18,7 +18,7 @@ export default function AuthLayout() {
         <Background />
 
         {/* Buttons to navigate between sign in and sign up pages */}
-        <div className="w-110 bg-white/95 p-10 rounded-2xl">
+        <div className="sm:w-110 w-11/12 bg-white/95 p-6 sm:p-10 rounded-2xl">
           <div className="flex justify-between gap-2 mb-5">
             {authButtons.map((btn) => (
               <Button key={btn.id} title={btn.title} path={btn.path} />

@@ -20,14 +20,14 @@ export default function LoginFooter() {
             onChange={(e) => setRememberMe(e.target.checked)}
           />
           <label htmlFor="cbtest-19" className="check-box"></label>
-          <label htmlFor="cbtest-19" className="ms-2 cursor-pointer font-bold">
+          <label htmlFor="cbtest-19" className="ms-2 text-sm sm:text-md cursor-pointer font-bold">
             Remember me
           </label>
         </div>
       </div>
 
       {/* Forgot password button */}
-      <button className="capitalize text-emerald-600 cursor-pointer hover:text-emerald-800 duration-300">
+      <button className="capitalize text-emerald-600 cursor-pointer hover:text-emerald-800 duration-300 text-sm sm:text-md">
         Forgot password?
       </button>
     </div>
