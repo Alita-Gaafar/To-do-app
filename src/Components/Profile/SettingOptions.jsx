@@ -1,6 +1,6 @@
 import { use } from "react";
 import ThemeToggle from "../ThemeToggle";
-import { ProfileCtx } from "../Contexts/ProfileCtx";
+import { ProfileCtx } from "../contexts/ProfileCtx";
 import { Switch } from "@/components/ui/switch";
 
 export default function SettingOptions({ title, description, icon }) {

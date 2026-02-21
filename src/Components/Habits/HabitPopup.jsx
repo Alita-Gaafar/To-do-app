@@ -1,77 +1,39 @@
-import { motion } from "motion/react";
-import { use, useState } from "react";
-import { HabitsCtx } from "../Contexts/HabitsCtx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { use } from "react";
+import { HabitsCtx } from "../contexts/HabitsCtx";
 import Input from "../Input";
-import ActionBtn from "../ActionBtn";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import ActionBtn from "../buttons/ActionBtn";
+import PopupHeader from "./popup/PopupHeader";
+import SelectFreq from "./SelectFreq";
 
-export default function HabitPopup({ children }) {
+export default function HabitPopup({}) {
   // -------------------- Contexts --------------------
-  const {
-    handleCancelBtnClick,
-    habitTextRef,
-    handleAddNewHabitClick,
-    setFrequency,
-  } = use(HabitsCtx);
+  const { handleInputChange, handleAddNewHabit } = use(HabitsCtx);
   // End of contexts
+
   // -------------------- Component Structure --------------------
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease: "linear" }}
-      className={`w-full h-full flex items-center justify-center fixed bg-[#dedede88] backdrop-blur-[1px]`}
-    >
-      <div className="w-140 bg-white p-5 rounded-lg">
+    <div className="overlay">
+      <div className="w-140 bg-white p-5 rounded-lgw-140 overflow-y-auto rounded-lg shadow-2xl">
         {/* Header */}
-        <div className="flex justify-between items-center mb-7">
-          <p className="font-semibold text-lg">{children}</p>
-          <button
-            className="text-neutral-700 cursor-pointer"
-            onClick={handleCancelBtnClick}
-          >
-            <FontAwesomeIcon icon="fa-solid fa-x" size="sm" />
-          </button>
-        </div>
+        <PopupHeader />
 
-        <form action="">
+        <form action="" onSubmit={handleAddNewHabit}>
           {/* Title input */}
           <Input
             required={true}
             placeholder="e.g., Drink Water, Exercise"
-            id="Title"
-            font="font-semibold text-sm"
-            margin="mb-3"
+            title="Title"
+            name="title"
             type="text"
-            ref={habitTextRef}
+            inputClass="font-semibold text-sm"
+            labelClass="mb-3"
+            handleInputChange={handleInputChange}
           />
 
-          {/* Select frequency */}
-          <div className="mb-3">
-            <Select onValueChange={setFrequency}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a frequency" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* Add habit button */}
-          <ActionBtn handleClick={handleAddNewHabitClick}>Add Habit</ActionBtn>
+          <ActionBtn>Add Habit</ActionBtn>
         </form>
       </div>
-    </motion.div>
+    </div>
   );
 }

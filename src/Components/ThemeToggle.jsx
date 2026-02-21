@@ -1,7 +1,7 @@
 import { use } from "react";
 import { useTheme } from "./ThemeProvider";
 import { Switch } from "@/components/ui/switch";
-import { ProfileCtx } from "./Contexts/ProfileCtx";
+import { ProfileCtx } from "./contexts/ProfileCtx";
 
 export default function ThemeToggle({}) {
   // -------------------- States --------------------

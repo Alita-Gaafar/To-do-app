@@ -1,53 +1,80 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CardStyle from "../CardStyle";
+import CardStyle from "../styling components/CardStyle";
 import { Progress } from "@/components/ui/progress";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { use } from "react";
-import { GoalsCtx } from "../Contexts/GoalsContext";
-import EditBtn from "../EditBtn";
-import DeleteBtn from "../DeleteBtn";
-import { motion } from "motion/react";
+import { use, useState } from "react";
+import { GoalsCtx } from "../contexts/GoalsContext";
+import EditBtn from "../buttons/EditBtn";
+import DeleteBtn from "../buttons/DeleteBtn";
+import ProgressBtn from "./ProgressBtn";
 
-export default function GoalCard({
-  goalId,
-  title,
-  description,
-  date,
-  subTasks,
-  milestones,
-  ...props
-}) {
-  
-  // -------------------- Variables --------------------
-  const completedSubTasks = subTasks.filter(
-    (subTask) => subTask.completed
-  ).length; // Total completed sub tasks
+const DIVIDED_BY = 4;
 
-  const progress = ((completedSubTasks / subTasks.length) * 100).toFixed(0); // Progress percentage
-  // End of variables
-
+export default function GoalCard({ goalId, title, description, date }) {
   // -------------------- Contexts --------------------
-  const { subTaskState, handleRemoveGoal, goalState, handleEditClick } =
+  const { handleRemoveGoal, handleShowEditPopup, handleUpdateGoalState } =
     use(GoalsCtx);
   // End of contexts
 
-  // -------------------- Testing --------------------
+  // States
+  const [progress, setProgress] = useState(0);
+  // End of states
 
-  // End of testing
+  // Variables
+
+  const today = new Date().toLocaleDateString("en-CA"); // Formatted todays date
+
+  const goalDate = date && new Date(date).toLocaleDateString("en-CA"); // Formatted goal date
+
+  const dateRange = date && goalDate >= today; // goal is in range or not
+
+  const progressState = progress == 100; // Progress is 100 or not
+
+  // Card style
+  const cardStyle = progressState
+    ? "bg-green-100"
+    : dateRange == false
+      ? "bg-red-100"
+      : "bg-white";
+
+  // End of variables
+
+  function handleIncreaseProgress(id) {
+    if (progress < 100) {
+      setProgress((prev) => prev + 100 / DIVIDED_BY);
+
+      const updatedProgress = progress + 100 / DIVIDED_BY;
+      handleUpdateGoalState(id, updatedProgress);
+    }
+  }
+
+  function handleDecreaseProgress(id) {
+    if (progress > 0) {
+      setProgress((prev) => prev - 100 / DIVIDED_BY);
+
+      const updatedProgress = progress - 100 / DIVIDED_BY;
+      handleUpdateGoalState(id, updatedProgress);
+    }
+  }
 
   return (
-    <CardStyle {...props}>
+    <CardStyle classes={cardStyle}>
       {/* Title, description and date of the goal */}
       <div className="">
         {/* Title and buttons */}
         <div className="mb-3 flex justify-between">
           {/* Title */}
           <p>{title}</p>
+
           {/* Edit and delete goal buttons */}
           <div className="flex gap-3">
-            <EditBtn id={goalId} handleClick={handleEditClick}></EditBtn>
-            <DeleteBtn id={goalId} handleClick={handleRemoveGoal}></DeleteBtn>
+            {/* Edit button */}
+            <EditBtn
+              id={goalId}
+              handleClick={() => handleShowEditPopup(goalId)}
+            />
+
+            {/* Delete button */}
+            <DeleteBtn handleClick={() => handleRemoveGoal(goalId)}></DeleteBtn>
           </div>
         </div>
 
@@ -67,67 +94,27 @@ export default function GoalCard({
       <div className="my-12">
         <div className="flex justify-between mb-3 text-neutral-600">
           <span>Progress</span>
-          <span>{Number(progress) ? progress : 0}%</span>
+          <span></span>
+          {progress > 0 ? progress : 0}%
         </div>
-        <Progress
-          value={Number(progress) ? progress : 0}
-          className="w-[100%]"
-        />
+        <Progress value={progress} className="w-[100%] z-1" />
       </div>
 
-      {/* Sub tasks section */}
-      {subTasks.length > 0 && (
-        <div>
-          {/* Sub tasks label */}
-          <div className="mb-3 text-neutral-800">Sub-Tasks:</div>
+      {/* Progress buttons */}
+      <div className="flex flex-col-reverse sm:flex-row justify-center sm:justify-between items-center">
+        {/* Decrease progress button */}
+        <ProgressBtn
+          title="Decrease Progress"
+          handleClick={() => handleDecreaseProgress(goalId)}
+        />
 
-          {/* Sub tasks */}
-          {subTasks.map((subTask) => {
-            return (
-              <div key={subTask.id} className="flex gap-2 ms-6 mb-2">
-                <Checkbox
-                  id={`subtask-${subTask.id}`}
-                  checked={subTask.completed}
-                  onClick={() => goalState(goalId)}
-                  onCheckedChange={(checked) => {
-                    checked
-                      ? subTaskState(goalId, subTask.id, true)
-                      : subTaskState(goalId, subTask.id, false);
-                  }}
-                  className="cursor-pointer"
-                />
-                <Label
-                  htmlFor={`subtask-${subTask.id}`}
-                  className={`${
-                    subTask.completed
-                      ? "line-through text-neutral-500"
-                      : "text-neutral-700"
-                  }  font-normal text-[15px]`}
-                >
-                  {subTask.title}
-                </Label>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Mile stones section */}
-      {milestones.length > 0 && (
-        <div className="flex gap-2 mt-10">
-          {milestones.map((milestone) => (
-            <div
-              key={milestone.id}
-              className="bg-neutral-200 text-xs font-medium rounded-md py-0.5 inline-flex justify-center items-center px-2"
-            >
-              <FontAwesomeIcon icon="fa-solid fa-trophy" />
-              <span className="ms-1">{milestone.title}</span>
-            </div>
-          ))}
-        </div>
-      )}
+        {/* Increase progress button */}
+        <ProgressBtn
+          title="Increase Progress"
+          handleClick={() => handleIncreaseProgress(goalId)}
+        />
+      </div>
+      {dateRange == false && <div className="mt-5">The time is up !</div>}
     </CardStyle>
   );
 }
-
-export const MotionGoalCard = motion.create(GoalCard);

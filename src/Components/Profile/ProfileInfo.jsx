@@ -1,14 +1,13 @@
 import { use } from "react";
-import CardStyle from "../CardStyle";
-import { ProfileCtx } from "../Contexts/ProfileCtx";
+import CardStyle from "../styling components/CardStyle";
+import { ProfileCtx } from "../contexts/ProfileCtx";
 import EditProfile from "./EditProfile";
 import UserData from "./UserData";
 import SettingOptions from "./SettingOptions";
 import { useTheme } from "../ThemeProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TaskContext from "../Contexts/TasksContext";
-import { HabitsCtx } from "../Contexts/HabitsCtx";
-import AuthButtonsContext from "../Contexts/AuthButtonsContext";
+import TaskContext from "../contexts/TasksContext";
+import { HabitsCtx } from "../contexts/HabitsCtx";
 
 export default function ProfileInfo() {
   // -------------------- States --------------------
@@ -21,8 +20,6 @@ export default function ProfileInfo() {
   const { numberOfCompletedTasks } = use(TaskContext);
 
   const { totalStreaks } = use(HabitsCtx);
-
-  const { memberHistory } = use(AuthButtonsContext);
 
   // End of contexts
 

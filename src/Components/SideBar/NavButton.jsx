@@ -1,34 +1,45 @@
 import "../../util/fontAwesome.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NavBtnCtx from "../Contexts/NavBtnCtx";
-import { useContext } from "react";
-import { motion } from "motion/react";
+import { NavLink } from "react-router-dom";
 
 export default function NavButton({
   fa,
   children,
-  iconColors,
-  activePage,
+  iconColors = "",
   text,
-  textColor,
-  bgColor,
+  path,
 }) {
-  const { setActivePage } = useContext(NavBtnCtx);
   return (
-    <li className="mb-3">
+    <>
       {children}
-      <button
-        className={`${textColor} w-full cursor-pointer mb-5 p-4 flex items-center z-10 relative duration-200 rounded-lg ${
-          !activePage && "hover:bg-neutral-100"
-        } ${bgColor}`}
-        onClick={() => setActivePage(activePage)}
+
+      <NavLink
+        to={path}
+        end
+        className={({ isActive }) =>
+          `
+    flex w-full items-center gap-3 rounded-lg transition duration-200 mb-5 p-4
+    ${isActive ? "bg-emerald-500 text-white" : "text-neutral-700 hover:bg-neutral-100"}
+    group-data-[collapsible=icon]:!w-9
+    group-data-[collapsible=icon]:!h-9
+    group-data-[collapsible=icon]:!p-0
+    group-data-[collapsible=icon]:!justify-center
+    group-data-[collapsible=icon]:!mx-0
+    group-data-[collapsible=icon]:!my-1
+    group-data-[collapsible=icon]:!rounded-xl
+  `
+        }
       >
         <FontAwesomeIcon
           icon={fa}
-          className={`${iconColors} dark:text-[var(--dark-text-primary-color)] text-xl me-2`}
+          className={`shrink-0 text-lg ${iconColors} dark:text-[var(--dark-text-primary-color)]`}
         />
-        {text}
-      </button>
-    </li>
+
+        {/* label hidden when collapsed */}
+        <span className="truncate group-data-[collapsible=icon]:hidden">
+          {text}
+        </span>
+      </NavLink>
+    </>
   );
 }

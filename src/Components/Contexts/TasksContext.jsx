@@ -1,264 +1,178 @@
+import useAdd from "@/hooks/useAdd";
+import useDelete from "@/hooks/useDelete";
+import useEdit from "@/hooks/useEdit";
+import useForm from "@/hooks/useForm";
+import { monthFormat } from "@/util/month-format";
+import { showInfo, showSuccess } from "@/util/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createContext, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-const TaskContext = createContext();
+const TaskContext = createContext({
+  tasks: null,
+  popupInfo: null,
+  taskToEdit: null,
+  handleInputChange: null,
+  handleShowAddPopup: null,
+  handleShowEditPopup: null,
+  handleHidePopup: null,
+  handleUpdateTaskState: null,
+  handleAddNewTask: null,
+  handleEditTask: null,
+  taskToEdit: null,
+  completedTasks: null,
+  pendingTasks: null,
+});
 
 export function TaskWrapper({ children }) {
-  // -------------------- STATES --------------------
-  const [activeBtn, setActiveBtn] = useState("All"); // Active filter tasks button state
-  const [tasks, setTasks] = useState([]); // Tasks state
-  const [showPopup, setShowPopup] = useState({
-    addPopup: false,
-    editPopup: false,
+  // States
+  const [popup, setPopup] = useState({
+    show: false,
+    type: "",
   });
-  const [editingId, setEditingId] = useState();
+
+  const [tasks, setTasks] = useState([]);
+
   // End of states
 
-  // -------------------- Variables --------------------
-  const randomNumber = Date.now() * Math.random(); // Random number
+  // Custom hooks
+  // Use form hook
+  const initialFormState = {
+    title: "",
+    description: "",
+    date: "",
+    category: "",
+  }; // Initial form data
 
-  // Number of all tasks
-  const numberOfTasks = tasks.length;
+  const { formData, handleInputChange, setFormData, resetForm } =
+    useForm(initialFormState);
+  // End of use form hook
+
+  // Use add custom hook
+  const { handleAdd: handleAddNewTask } = useAdd(
+    handleHidePopup,
+    "Task added successfully! 🎉",
+    formData,
+    resetForm,
+    setTasks,
+  );
+
+  // Edit hook
+  const {
+    setItemToEdit: setTaskToEdit,
+    itemToEdit: taskToEdit,
+    handleEdit: handleEditTask,
+  } = useEdit(
+    handleHidePopup,
+    "Task edited successfully! 🎉",
+    formData,
+    setTasks,
+  );
+  // End of edit hook
+
+  // Delete hook
+  const { handleRemoveData: handleRemoveTask } = useDelete(
+    "Task deleted ❌",
+    setTasks,
+  );
+
+  // Variables
 
   // Completed tasks
-
-  const completedTasks = tasks.filter((task) => task.completed === true);
-  const numberOfCompletedTasks = tasks.filter((task) => task.completed).length;
+  const completed = tasks.filter((task) => task.completed === true);
 
   // Pending tasks
-  const pendingTasks = tasks.filter((task) => task.pending);
-  const numberOfPendingTasks = tasks.filter((task) => task.pending).length;
-
-  // Todays tasks
-  const date = new Date();
-  const todaysDate = `${date.getFullYear()}-${date.getMonth() + 1}-${
-    date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-  }`;
-
-  const todaysTasks = tasks.filter((task) => task.taskDate === todaysDate);
+  const pending = tasks.filter((task) => task.completed === false);
 
   // End of variables
-
-  // -------------------- REFS --------------------
-  const taskText = useRef();
-  const taskDescription = useRef();
-  const taskCategory = useRef();
-  const taskDate = useRef();
-  // End of refs section
 
   // -------------------- UseEffect --------------------
 
   // Add overflow hidden class when the popup is opened
   useEffect(() => {
-    if (showPopup.addPopup || showPopup.editPopup) {
+    if (popup.show) {
       document.body.classList.add("overflow-hidden");
-    } else document.body.classList.remove("overflow-hidden");
+    }
 
     return () => document.body.classList.remove("overflow-hidden");
-  }, [showPopup]);
+  }, [popup.show]);
   // End of useEffect
 
   // Functions
 
-  // Show the specific section of tasks (all, today, etc...)
-  function setActiveTasksSection(sectionBtn) {
-    setActiveBtn(sectionBtn);
+  // Show add task popup
+  function handleShowAddPopup() {
+    // Show add task popup
+    setPopup(() => ({
+      show: true,
+      type: "add",
+    }));
   }
 
-  // Show add task popup
-  function handleAddTaskClick() {
-    // Focus on title after opening the popup
-    // Time out because react needs some time to see the elements in something after it is opened
-    setTimeout(() => {
-      taskText.current.focus();
-    }, 1);
+  // Show edit task popup and get the task to be edited
+  function handleShowEditPopup(id) {
+    const task = tasks.find((task) => task.id === id); // Task to be edited
 
-    // set add popup to true to open it
-    setShowPopup((prev) => ({
-      ...prev,
-      addPopup: true,
+    setTaskToEdit(task);
+
+    if (!task) return;
+
+    setFormData({
+      title: task.title,
+      description: task.description,
+      category: task.category,
+      date: task.date,
+    });
+
+    // Show edit popup
+    setPopup(() => ({
+      show: true,
+      type: "edit",
     }));
   }
 
   // Hide Popup
-  function handleCancelBtnClick() {
-    setShowPopup(() => ({
-      addPopup: false,
-      editPopup: false,
-    }));
-  }
-
-  // Show edit task popup and set the editing id
-  function handleEditClick(id) {
-    // Set editing id to clicked task id
-    setEditingId(id);
-
-    // Show popup
-    setShowPopup((prev) => ({
-      ...prev,
-      editPopup: true,
-    }));
-  }
-
-  // Set task as completed or not completed
-  function taskState(id, state) {
-    setTasks((prevTasks) => {
-      return prevTasks.map((task) => {
-        // If the task is checked from the checkbox set the task as completed if it is not set it as not completed
-        if (task.id === id) {
-          return { ...task, pending: !state, completed: state };
-        }
-        return task;
-      });
-    });
-  }
-
-  // Add tasks
-  function handleAddNewTaskClick(e) {
-    e.preventDefault(); // stop default submit
-
-    // get the closest form element
-    const form = e.target.closest("form");
-
-    // run HTML5 validation FIRST
-    if (!form.checkValidity()) {
-      form.reportValidity();
-    }
-
-    // Check if title is empty
-    if (!taskText.current.value) {
-      toast.info("Please enter a task title first", {
-        duration: 5000,
-        position: "bottom-right",
-        closeButton: true,
-      });
-      return;
-    }
-
-    // Add notification with text added successfully
-    toast.success("Task added successfully! 🎉", {
-      icon: (
-        <FontAwesomeIcon
-          icon="fa-solid fa-circle-check"
-          style={{ color: "#000000" }}
-        />
-      ),
-      duration: 5000,
-      position: "bottom-right",
-      closeButton: true,
-    });
-
-    // Hide the add task popup after 0.5 second
-    setShowPopup(false);
-
-    // Set add tasks state
-    setTasks((prevTasks) => {
-      return [
-        ...prevTasks,
-        {
-          id: randomNumber,
-          completed: false,
-          pending: true,
-          taskText: taskText.current.value,
-          taskDescription: taskDescription.current.value,
-          taskCategory: taskCategory.current.value,
-          taskDate: taskDate.current.value,
-        },
-      ];
-    });
-  }
-
-  // Edit task
-  function handleEditTaskClick(e) {
-    e.preventDefault();
-
-    // Add notification with text updated
-    toast.success("Task updated successfully! ✏️", {
-      icon: (
-        <FontAwesomeIcon
-          icon="fa-solid fa-circle-check"
-          style={{ color: "#000000" }}
-        />
-      ),
-      duration: 5000,
-      position: "bottom-right",
-      closeButton: true,
-    });
-
-    
-    // Close popup
-
-    setShowPopup((prev) => ({
-      ...prev,
-      editPopup: false,
+  function handleHidePopup() {
+    // Hide popup
+    setPopup(() => ({
+      show: false,
+      type: "",
     }));
 
-    // Edit task based on id
+    setTaskToEdit(null);
+  }
+
+  // Update task completes status
+  function updateTaskState(id) {
     setTasks((prevTasks) => {
-      return prevTasks.map((task) => {
-        if (task.id === editingId) {
-          return {
-            ...task,
-            taskText: taskText.current.value,
-            taskDescription: taskDescription.current.value,
-            taskCategory: taskCategory.current.value,
-            taskDate: taskDate.current.value,
-          };
-        } else return task;
+      const updatedTasks = prevTasks.map((task) => {
+        return task.id === id
+          ? { ...task, completed: !task.completed }
+          : { ...task };
       });
+
+      return [...updatedTasks];
     });
   }
 
-  // Remove task
-  function handleRemoveTask(id) {
-    // Add notification with text removed
-    toast.success("Task deleted ❌", {
-      icon: (
-        <FontAwesomeIcon
-          icon="fa-solid fa-circle-check"
-          style={{ color: "#000000" }}
-        />
-      ),
-      duration: 5000,
-      position: "bottom-right",
-      closeButton: true,
-    });
-
-    // Remove the task
-    setTasks((prevTasks) => {
-      return prevTasks.filter((task) => task.id !== id);
-    });
-  }
-
-  // End of functions  
+  // End of functions
 
   // -------------------- Context values --------------------
   const TaskContextVal = {
-    activeBtn: activeBtn,
-    showPopup: showPopup,
-    editingId: editingId,
+    popupInfo: popup,
+    taskToEdit: taskToEdit,
     tasks: tasks,
-    completedTasks: completedTasks,
-    todaysTasks: todaysTasks,
-    pendingTasks: pendingTasks,
-    numberOfTasks: numberOfTasks,
-    numberOfCompletedTasks: numberOfCompletedTasks,
-    numberOfPendingTasks: numberOfPendingTasks,
-    taskTextRef: taskText,
-    taskDescriptionRef: taskDescription,
-    taskCategoryRef: taskCategory,
-    taskDateRef: taskDate,
-    taskState: taskState,
-    handleAddTaskClick: handleAddTaskClick,
-    handleAddNewTaskClick: handleAddNewTaskClick,
-    handleEditTaskClick: handleEditTaskClick,
-    handleEditClick: handleEditClick,
-    handleRemoveTaskClick: handleRemoveTask,
-    handleEdit: handleEditClick,
+    completedTasks: completed,
+    pendingTasks: pending,
+    handleUpdateTaskState: updateTaskState,
+    handleShowAddPopup: handleShowAddPopup,
+    handleAddNewTask: (e) => handleAddNewTask(e, { completed: false }),
+    handleEditTask: handleEditTask,
+    handleShowEditPopup: handleShowEditPopup,
     handleRemoveTask: handleRemoveTask,
-    handleCancelBtnClick: handleCancelBtnClick,
-    handleFilterBtnClick: setActiveTasksSection,
+    handleRemoveTask: handleRemoveTask,
+    handleHidePopup: handleHidePopup,
+    handleInputChange: handleInputChange,
   };
   // End of context values
 

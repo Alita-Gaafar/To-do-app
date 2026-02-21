@@ -1,6 +1,6 @@
 import { use } from "react";
-import ActionBtn from "../ActionBtn";
-import { ProfileCtx } from "../Contexts/ProfileCtx";
+import ActionBtn from "../buttons/ActionBtn";
+import { ProfileCtx } from "../contexts/ProfileCtx";
 import Input from "../Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

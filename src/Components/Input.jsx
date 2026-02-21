@@ -1,34 +1,42 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AddButton from "./AddButton";
+import AddButton from "./buttons/AddButton";
+import { use } from "react";
+import TaskContext from "./contexts/TasksContext";
 
 export default function Input({
+  title,
   type,
+  name,
   required,
   placeholder,
-  ref,
-  id,
-  font,
-  margin,
-  value,
-  addBtn,
+  labelClass,
+  inputClass,
   handleClick,
+  handleInputChange,
+  dataToEdit,
   icon,
 }) {
   return (
-    <div className={`${placeholder !== "sub tasks" && "mb-5"} w-full`}>
-      <label htmlFor={id} className={`block mb-1 ${font} ${margin && margin} dark:text-white`}>
-        {id}
+    <div className={`mb-2 ${inputClass && inputClass}`}>
+      {/* Label */}
+      <label
+        htmlFor={name}
+        className={`block mb-1 dark:text-white capitalize ${labelClass && labelClass}`}
+      >
+        {title}
       </label>
+
+      {/* Input container */}
       <div
         className="flex items-center"
-        style={
-          addBtn && {
-            display: "flex",
-            alignItems: "stretch",
-            gap: "5px",
-            position: "relative",
-          }
-        }
+        // style={
+        //   addBtn && {
+        //     display: "flex",
+        //     alignItems: "stretch",
+        //     gap: "5px",
+        //     position: "relative",
+        //   }
+        // }
       >
         {icon && (
           <span className="absolute ms-3 text-neutral-400">
@@ -37,24 +45,24 @@ export default function Input({
         )}
         {/* Input */}
         <input
-          name={id}
-          defaultValue={value}
-          ref={ref}
-          required={required ? required : false}
+          defaultValue={dataToEdit?.[name]}
+          onChange={(e) => handleInputChange && handleInputChange(e, name)}
+          name={name}
+          required={required}
           type={type}
-          id={id}
-          placeholder={placeholder && `Enter your ${placeholder}`}
+          id={name}
+          placeholder={`Enter your ${placeholder || "..."}`}
           className={`${
             icon && "ps-10"
           } input-focus px-4 py-3 w-full rounded-sm duration-300 bg-[#f3f3f5] dark:bg-neutral-900 dark:text-[var(--dark-text-primary-color)]`}
         />
 
         {/* Add button */}
-        {addBtn && (
+        {/* {addBtn && (
           <AddButton handleClick={handleClick} height={true}>
             Add
           </AddButton>
-        )}
+        )} */}
       </div>
     </div>
   );

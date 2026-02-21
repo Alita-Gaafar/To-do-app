@@ -1,6 +1,6 @@
 import { use } from "react";
-import { ProfileCtx } from "../Contexts/ProfileCtx";
-import ActionBtn from "../ActionBtn";
+import { ProfileCtx } from "../contexts/ProfileCtx";
+import ActionBtn from "../buttons/ActionBtn";
 
 export default function UserData() {
   // -------------------- Contexts --------------------

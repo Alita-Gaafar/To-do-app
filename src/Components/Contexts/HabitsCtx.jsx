@@ -1,52 +1,60 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createContext, useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
+// Custom hooks
+import useAdd from "@/hooks/useAdd";
+import useForm from "@/hooks/useForm";
+import useDelete from "@/hooks/useDelete";
 
-const DATE = new Date();
+// External data
+import { formattedDate } from "@/util/formatted-date";
+
+// Hooks
+import { createContext, useEffect, useState } from "react";
+
 export const HabitsCtx = createContext({
-  habitTextRef: null,
   habits: null,
+  today: null,
   setFrequency: null,
-  numberOfAllHabits: null,
-  totalStreaks: null,
-  avgSuccessRate: null,
   showPopup: null,
-  handleAddHabitClick: null,
-  handleCancelBtnClick: null,
-  handleAddNewHabitClick: null,
+  handleShowPopup: null,
+  handleHidePopup: null,
+  handleAddNewHabit: null,
   handleRemoveHabit: null,
-  handleTaskCompletedClick: null,
+  handleStreak: null,
+  handleInputChange: null,
 });
 
 export default function HabitsWrapper({ children }) {
-  // -------------------- States --------------------
-  const [showPopup, setShowPopup] = useState(false);
+  // States
+  const [showPopup, setShowPopup] = useState(false); // Popup visibility
 
-  const [frequency, setFrequency] = useState();
-
-  // const [habits, setHabits] = useState(
-  //   JSON.parse(localStorage.getItem("habits")) || []
-  // );
-  const [habits, setHabits] = useState([]);
-
+  const [habits, setHabits] = useState([]); // Habits
   // End of states
 
-  // -------------------- Refs --------------------
-  const habitText = useRef(); // End of refs
+  // Custom hooks
+  // Use form hook
+  const initialFormState = {
+    title: "",
+  }; // Initial form data
 
-  // -------------------- Variables --------------------
-  const numberOfAllHabits = habits.length;
+  const { formData, handleInputChange, resetForm } = useForm(initialFormState);
+  // End of use form hook
 
-  const totalStreaks = habits.reduce((accu, curr) => accu + curr.streaks, 0); // Total streaks
+  // Use add custom hook
+  const { handleAdd: handleAddNewHabit } = useAdd(
+    handleHidePopup,
+    "Habit added successfully! 🎉",
+    formData,
+    resetForm,
+    setHabits,
+  );
 
-  const avgSuccessRate =
-    habits.length !== 0
-      ? habits.reduce((accu, curr) => accu + curr.successRate, 0) /
-        habits.length
-      : 0; // Avg Success Rate
+  // Delete hook
+  const { handleRemoveData: handleRemoveHabit } = useDelete(
+    "Habit deleted ❌",
+    setHabits,
+  );
 
-  const randomNumber = Date.now() * Math.random(); // Random number
-
+  // Variables
+  const today = formattedDate();
   // End of variables
 
   // -------------------- UseEffect --------------------
@@ -64,165 +72,56 @@ export default function HabitsWrapper({ children }) {
   // -------------------- Functions --------------------
 
   // Open popup onClicking add habit
-  function handleAddHabitClick() {
+  function handleShowPopup() {
     // set showPopup to true to display it
     setShowPopup(true);
   }
 
   // Hide Popup onClicking x
-  function handleCancelBtnClick() {
+  function handleHidePopup() {
     setShowPopup(false);
   }
 
-  // Set habit as completed today
-  function handleTaskCompletedClick(id) {
-    // If date changed (day is gone) open the ability to set habit as completed
-    // Increase the streak and the success progress
-    let completedHabit = null;
-    let nonCompletedHabit = null;
+  function handleStreak(id) {
+    // Update the streaks (Completed and + 1 or uncompleted and -1)
     setHabits((prevHabits) => {
-      return prevHabits.map((habit) => {
-        // If the id of the clicked habit equals the id of an habit checks if the habit date not equals the day date
-        if (habit.id === id) {
-          if (habit.day !== DATE.getDate()) {
-            completedHabit = {
+      const updatedHabits = prevHabits.map((habit) => {
+        return habit.id === id && today === habit.date
+          ? {
               ...habit,
-              streaks: habit.streaks + 1,
-              successRate: habit.successRate + 5,
-              day: DATE.getDate(),
-            };
-            return completedHabit;
-          } else nonCompletedHabit = { ...habit };
-        }
-        return habit;
+              streaks: habit.streaks - 1,
+              completed: false,
+              date: null,
+            }
+          : habit.id === id
+            ? {
+                ...habit,
+                streaks: habit.streaks + 1,
+                completed: true,
+                date: today,
+              }
+            : { ...habit };
       });
-    });
 
-    // If the streaks increased
-    if (completedHabit) {
-      toast.success(
-        `${completedHabit.title} completed! Streak: ${completedHabit.streaks}`,
-        {
-          duration: 5000,
-          position: "bottom-right",
-          closeButton: true,
-        }
-      );
-
-      // If the streaks already increased in a day
-    } else if (nonCompletedHabit) {
-      toast.success(`Already completed! Streak: ${nonCompletedHabit.streaks}`, {
-        duration: 5000,
-        position: "bottom-right",
-        closeButton: true,
-      });
-    }
-  }
-
-  // Add a new habit
-  function handleAddNewHabitClick(e) {
-    e.preventDefault(); // stop default submit
-
-    // get the closest form element
-    const form = e.target.closest("form");
-
-    // run HTML5 validation FIRST
-    if (!form.checkValidity()) {
-      form.reportValidity();
-    }
-
-    // Check if title is empty
-    if (!habitText.current.value) {
-      toast.info("Please enter a habit title first", {
-        duration: 5000,
-        position: "bottom-right",
-        closeButton: true,
-      });
-      return;
-    }
-
-    // Check if frequency is empty
-    if (!frequency) {
-      toast.info("Please enter the frequency of the habit", {
-        duration: 5000,
-        position: "bottom-right",
-        closeButton: true,
-      });
-      return;
-    }
-
-    // Add notification with text added successfully
-    toast.success("Habit added successfully! 🎉", {
-      icon: (
-        <FontAwesomeIcon
-          icon="fa-solid fa-circle-check"
-          style={{ color: "#000000" }}
-        />
-      ),
-      duration: 5000,
-      position: "bottom-right",
-      closeButton: true,
-    });
-
-    // Hide the popup after 0.5 second
-    setShowPopup(false);
-
-    setTimeout(() => {
-      setFrequency("");
-      // localStorage.setItem("habits", JSON.stringify(habits));
-    }, 1);
-
-    // Set add habits state
-    setHabits((prevHabits) => {
-      return [
-        ...prevHabits,
-        {
-          id: randomNumber,
-          title: habitText.current.value,
-          streaks: 0,
-          frequency: frequency.slice(0, 1).toUpperCase() + frequency.slice(1),
-          successRate: 0,
-          day: DATE.getDate() - 1,
-        },
-      ];
+      return updatedHabits;
     });
   }
 
-  // Delete habits
-  function handleRemoveHabit(id) {
-    // Add notification with text removed
-    toast.success("Habit deleted ❌", {
-      icon: (
-        <FontAwesomeIcon
-          icon="fa-solid fa-circle-check"
-          style={{ color: "#000000" }}
-        />
-      ),
-      duration: 5000,
-      position: "bottom-right",
-      closeButton: true,
-    });
-
-    setHabits((prevHabits) => {
-      return prevHabits.filter((habit) => habit.id !== id);
-    });
-  }
   // End of functions
 
   // -------------------- Contexts --------------------
   const goalsCtxValue = {
-    habitTextRef: habitText,
+    habitText: habits.title,
     habits: habits,
-    setFrequency: setFrequency,
-    numberOfAllHabits: numberOfAllHabits,
-    totalStreaks: totalStreaks,
-    avgSuccessRate: avgSuccessRate,
     showPopup: showPopup,
-    handleAddHabitClick: handleAddHabitClick,
-    handleCancelBtnClick: handleCancelBtnClick,
-    handleAddNewHabitClick: handleAddNewHabitClick,
+    today: today,
+    handleShowPopup: handleShowPopup,
+    handleHidePopup: handleHidePopup,
+    handleAddNewHabit: (e) =>
+      handleAddNewHabit(e, { streaks: 0, date: null, completed: false }),
     handleRemoveHabit: handleRemoveHabit,
-    handleTaskCompletedClick: handleTaskCompletedClick,
+    handleStreak: handleStreak,
+    handleInputChange: handleInputChange,
   };
   // End of contexts
 

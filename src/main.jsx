@@ -1,13 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import 'normalize.css';
-import './index.css'
-import './checkbox.css'
-import './chart.css'
-import App from './Components/App.jsx'
+import { createRoot } from "react-dom/client";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+// CSS
+import "./index.css";
+import "./checkbox.css";
+import "./chart.css";
+
+// React router
+import { BrowserRouter } from "react-router";
+
+import App from "./App.jsx";
+
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter basename="/To-do-app">
     <App />
-  </StrictMode>,
-)
+  </BrowserRouter>,
+);
