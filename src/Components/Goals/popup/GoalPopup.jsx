@@ -24,7 +24,7 @@ export default function GoalPopup({ title }) {
   // Component structure
   return (
     <div className="overlay">
-      <div className="w-140 max-h-[650px] overflow-y-auto bg-white p-5 rounded-lg shadow-2xl">
+      <div className="w-140 max-h-[650px] overflow-y-auto bg-white dark:bg-black p-5 rounded-lg shadow-2xl">
         {/* Header */}
         <PopupHeader title={title} />
 

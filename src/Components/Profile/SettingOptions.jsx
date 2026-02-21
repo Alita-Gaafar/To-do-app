@@ -1,36 +1,44 @@
-import { use } from "react";
+// Hooks
+import { useTheme } from "../ThemeProvider";
+
+// Comps
 import ThemeToggle from "../ThemeToggle";
-import { ProfileCtx } from "../contexts/ProfileCtx";
-import { Switch } from "@/components/ui/switch";
 
-export default function SettingOptions({ title, description, icon }) {
-  // -------------------- Contexts --------------------
-  const { handleSwitchNotification, notifications } = use(ProfileCtx);
-  // End of contexts
+// Font awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-  // -------------------- Component structure --------------------
+export default function SettingOptions({}) {
+  // States
+  const { theme } = useTheme();
+  // End of states
+
+  // Comp struct
   return (
     <>
-      <div className="bg-neutral-50 rounded-md p-5 flex justify-between items-center mb-5">
+      <div className="bg-neutral-50 dark:bg-neutral-900 rounded-md p-5 flex justify-between items-center mb-5">
         {/* Theme icon */}
-        <div className="flex-1">{icon}</div>
+        <div className="flex-1 me-3">
+          {
+            <FontAwesomeIcon
+              className={theme === "light" ? "text-amber-500" : "text-blue-500"}
+              icon={
+                theme === "light" ? "fa-solid fa-sun" : "fa-regular fa-moon"
+              }
+            />
+          }
+        </div>
 
         {/* Theme text */}
         <div className="flex-20">
-          <p className="mb-1">{title}</p>
-          <p className="text-neutral-600">{description}</p>
+          <p className="mb-1 dark:text-white">Theme</p>
+          <p className="text-neutral-600 dark:text-neutral-400">
+            {theme === "light" ? "Light Mode" : "Dark Mode"}
+          </p>
         </div>
 
         {/* Theme button */}
         <div className="flex-1">
-          {title === "Theme" ? (
-            <ThemeToggle></ThemeToggle>
-          ) : (
-            <Switch
-              onCheckedChange={handleSwitchNotification}
-              checked={notifications === "Enabled" ? false : true}
-            />
-          )}
+          <ThemeToggle></ThemeToggle>
         </div>
       </div>
     </>

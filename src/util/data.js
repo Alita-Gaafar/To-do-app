@@ -126,7 +126,7 @@ export const loginInputs = [
 
 export const signupInputs = [
   {
-    uniqueId: 0,
+    uniqueId: 1,
     type: "text",
     name: "full-name",
     title: "full Name",
@@ -134,7 +134,7 @@ export const signupInputs = [
     placeholder: "name",
   },
   {
-    uniqueId: 1,
+    uniqueId: 2,
     type: "email",
     name: "signup-email",
     title: "email",
@@ -142,12 +142,35 @@ export const signupInputs = [
     placeholder: "email",
   },
   {
-    uniqueId: 2,
+    uniqueId: 3,
     type: "password",
     name: "signup-password",
     title: "password",
     required: true,
     placeholder: "password",
+  },
+];
+
+export const editProfileInputs = [
+  {
+    uniqueId: 1,
+    type: "text",
+    name: "name",
+    title: "Name",
+    required: true,
+    placeholder: "name",
+    icon:"fa-regular fa-user",
+    inputClass: "mb-3",
+  },
+  {
+    uniqueId: 2,
+    type: "email",
+    name: "email",
+    title: "email",
+    required: true,
+    placeholder: "email",
+    icon:"fa-regular fa-envelope",
+    inputClass: "mb-3",
   },
 ];
 

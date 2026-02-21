@@ -28,7 +28,7 @@ export default function HabitCard({
       {/* Title and remove button */}
       <div className="mb-2 flex justify-between items-center">
         {/* Title */}
-        <div className="capitalize">{title}</div>
+        <div className="capitalize dark:text-white">{title}</div>
 
         {/* Remove Button */}
         <div>
@@ -37,7 +37,7 @@ export default function HabitCard({
       </div>
 
       {/* Streaks */}
-      <div className="bg-orange-50 px-3 py-4 mb-5 rounded-lg flex justify-between">
+      <div className="bg-orange-50 dark:bg-orange-950 px-3 py-4 mb-5 rounded-lg flex justify-between">
         <div>
           <span className="me-2">
             <FontAwesomeIcon
@@ -48,7 +48,7 @@ export default function HabitCard({
           <span>Streak</span>
         </div>
 
-        <div className="text-orange-500">{streaks} days</div>
+        <div className="text-orange-500 dark:text-orange-400">{streaks} days</div>
       </div>
 
       {/* Increase streaks */}

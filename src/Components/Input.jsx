@@ -11,7 +11,6 @@ export default function Input({
   placeholder,
   labelClass,
   inputClass,
-  handleClick,
   handleInputChange,
   dataToEdit,
   icon,
@@ -27,17 +26,7 @@ export default function Input({
       </label>
 
       {/* Input container */}
-      <div
-        className="flex items-center"
-        // style={
-        //   addBtn && {
-        //     display: "flex",
-        //     alignItems: "stretch",
-        //     gap: "5px",
-        //     position: "relative",
-        //   }
-        // }
-      >
+      <div className="flex items-center">
         {icon && (
           <span className="absolute ms-3 text-neutral-400">
             <FontAwesomeIcon icon={`${icon}`}></FontAwesomeIcon>
@@ -56,13 +45,6 @@ export default function Input({
             icon && "ps-10"
           } input-focus px-4 py-3 w-full rounded-sm duration-300 bg-[#f3f3f5] dark:bg-neutral-900 dark:text-[var(--dark-text-primary-color)]`}
         />
-
-        {/* Add button */}
-        {/* {addBtn && (
-          <AddButton handleClick={handleClick} height={true}>
-            Add
-          </AddButton>
-        )} */}
       </div>
     </div>
   );

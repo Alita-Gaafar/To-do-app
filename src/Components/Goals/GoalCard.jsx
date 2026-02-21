@@ -59,7 +59,7 @@ export default function GoalCard({ goalId, title, description, date }) {
   return (
     <CardStyle classes={cardStyle}>
       {/* Title, description and date of the goal */}
-      <div className="">
+      <div>
         {/* Title and buttons */}
         <div className="mb-3 flex justify-between">
           {/* Title */}
@@ -79,11 +79,11 @@ export default function GoalCard({ goalId, title, description, date }) {
         </div>
 
         {/* Description */}
-        {description && <p className="text-neutral-600 mb-3">{description}</p>}
+        {description && <p className="text-neutral-600 dark:text-neutral-400 mb-3">{description}</p>}
 
         {/* Date */}
         {date && (
-          <p className="text-neutral-600">
+          <p className="text-neutral-600 dark:text-neutral-400">
             <FontAwesomeIcon className="me-1" icon="fa-regular fa-calendar" />
             <span>Target: {date}</span>
           </p>
@@ -92,12 +92,12 @@ export default function GoalCard({ goalId, title, description, date }) {
 
       {/* Progress */}
       <div className="my-12">
-        <div className="flex justify-between mb-3 text-neutral-600">
+        <div className="flex justify-between mb-3 text-neutral-600 dark:text-neutral-400">
           <span>Progress</span>
           <span></span>
           {progress > 0 ? progress : 0}%
         </div>
-        <Progress value={progress} className="w-[100%] z-1" />
+        <Progress value={progress} className="w-[100%] dark:bg-neutral-600  z-1" />
       </div>
 
       {/* Progress buttons */}

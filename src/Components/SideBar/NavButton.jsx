@@ -19,7 +19,7 @@ export default function NavButton({
         className={({ isActive }) =>
           `
     flex w-full items-center gap-3 rounded-lg transition duration-200 mb-5 p-4
-    ${isActive ? "bg-emerald-500 text-white" : "text-neutral-700 hover:bg-neutral-100"}
+    ${isActive ? "bg-emerald-500 text-white" : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700"}
     group-data-[collapsible=icon]:!w-9
     group-data-[collapsible=icon]:!h-9
     group-data-[collapsible=icon]:!p-0

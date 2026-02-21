@@ -7,7 +7,6 @@ export const AppCtx = createContext({
 
 export default function AppWrapper({ children }) {
   const [rememberMe, setRememberMe] = useState(false);
-  console.log(rememberMe);
 
   // Ctx value
   const ctxVal = {

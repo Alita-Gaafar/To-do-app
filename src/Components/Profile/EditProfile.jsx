@@ -2,40 +2,19 @@ import { use } from "react";
 import ActionBtn from "../buttons/ActionBtn";
 import { ProfileCtx } from "../contexts/ProfileCtx";
 import Input from "../Input";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { editProfileInputs } from "@/util/data";
 
 export default function EditProfile() {
   // -------------------- Contexts --------------------
-  const {
-    name,
-    email,
-    handleSaveProfile,
-    handleCancelEdit,
-    userNameRef,
-    userEmailRef,
-  } = use(ProfileCtx);
+  const { handleSaveProfile, handleShowInfo } = use(ProfileCtx);
   // End of contexts
   return (
     <>
-      {/* User name */}
-      <Input
-        ref={userNameRef}
-        value={name}
-        icon="fa-regular fa-user"
-        margin="mb-3"
-        id="Full Name"
-        font="font-semibold"
-      ></Input>
-
-      {/* User email */}
-      <Input
-        ref={userEmailRef}
-        value={email}
-        icon="fa-regular fa-envelope"
-        margin="mb-3"
-        id="Full Name"
-        font="font-semibold"
-      ></Input>
+      <div className="w-full p-5 mb-3 shadow-sm hover:shadow-md duration-300 rounded-sm dark:bg-neutral-800">
+        {editProfileInputs.map((input) => {
+          return <Input {...input} />;
+        })}
+      </div>
 
       <div className="w-full grid grid-cols-2 gap-3">
         <ActionBtn handleClick={handleSaveProfile}>Save Changes</ActionBtn>
@@ -43,7 +22,7 @@ export default function EditProfile() {
         {/* Cancel edit button */}
         <ActionBtn
           style="bg-white text-lack hover:bg-[#e9ebef] border border-neutral-300"
-          handleClick={handleCancelEdit}
+          handleClick={handleShowInfo}
         >
           Cancel
         </ActionBtn>

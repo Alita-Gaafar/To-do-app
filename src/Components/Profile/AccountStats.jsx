@@ -1,4 +1,5 @@
 import CardStyle from "../styling components/CardStyle";
+import StatsCard from "./StatsCard";
 
 export default function AccountStats() {
   return (
@@ -9,22 +10,13 @@ export default function AccountStats() {
       {/* Stats */}
       <div className="flex justify-around">
         {/* Member entry date */}
-        <div className="text-center">
-          <p className="mb-2">Member Since</p>
-          <p className="text-neutral-700">November 2024</p>
-        </div>
+        <StatsCard label="Member Since" data="November 2024" hidden={true} />
 
         {/* Total Tasks */}
-        <div className="text-center">
-          <p className="mb-2">Total Tasks</p>
-          <p className="text-neutral-700">5 Completed</p>
-        </div>
+        <StatsCard label="Total Tasks" data="5 Completed" />
 
         {/* Streak */}
-        <div className="text-center">
-          <p className="mb-2">Current Streak</p>
-          <p className="text-neutral-700">19 days</p>
-        </div>
+        <StatsCard label="Current Streak" data="19 days" />
       </div>
     </CardStyle>
   );

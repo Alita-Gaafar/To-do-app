@@ -4,15 +4,15 @@ import ActionBtn from "../buttons/ActionBtn";
 
 export default function UserData() {
   // -------------------- Contexts --------------------
-  const { name, email, handleEditProfile } = use(ProfileCtx);
+  const { handleShowEdit } = use(ProfileCtx);
   // End of contexts
 
   // -------------------- Component structure --------------------
   return (
     <>
-      <div className="mb-2">{name}</div>
-      <div className="text-neutral-600 mb-15">{email}</div>
-      <ActionBtn handleClick={handleEditProfile}>Edit Profile</ActionBtn>
+      <div className="mb-2">Abdelrahman Mohammed</div>
+      <div className="text-neutral-600 mb-15">abdoh@example.com</div>
+      <ActionBtn handleClick={handleShowEdit}>Edit Profile</ActionBtn>
     </>
   );
 }

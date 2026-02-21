@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import { NavMain } from "@/components/sidebar/NavMain";
@@ -12,13 +10,11 @@ import {
 } from "@/components/ui/sidebar";
 import Header from "./Header";
 import { navBtns } from "@/util/data";
-import { useNavigate } from "react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./Footer";
 
 export function AppSidebar({ ...props }) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar className="dark:bg-neutral-800" collapsible="icon" {...props}>
       <SidebarHeader>
         <Header />
       </SidebarHeader>

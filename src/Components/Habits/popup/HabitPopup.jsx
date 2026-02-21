@@ -1,9 +1,9 @@
 import { use } from "react";
-import { HabitsCtx } from "../contexts/HabitsCtx";
-import Input from "../Input";
-import ActionBtn from "../buttons/ActionBtn";
-import PopupHeader from "./popup/PopupHeader";
-import SelectFreq from "./SelectFreq";
+import { HabitsCtx } from "../../contexts/HabitsCtx";
+import Input from "../../Input";
+import ActionBtn from "../../buttons/ActionBtn";
+import PopupHeader from "./PopupHeader";
+import SelectFreq from "../SelectFreq";
 
 export default function HabitPopup({}) {
   // -------------------- Contexts --------------------
@@ -13,7 +13,7 @@ export default function HabitPopup({}) {
   // -------------------- Component Structure --------------------
   return (
     <div className="overlay">
-      <div className="w-140 bg-white p-5 rounded-lgw-140 overflow-y-auto rounded-lg shadow-2xl">
+      <div className="w-140 bg-white dark:bg-black p-5 rounded-lgw-140 overflow-y-auto rounded-lg shadow-2xl">
         {/* Header */}
         <PopupHeader />
 

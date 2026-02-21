@@ -8,7 +8,7 @@ import { HabitsCtx } from "../components/contexts/HabitsCtx";
 import TopSection from "../components/TopSection";
 import { habitCards } from "@/util/data";
 import AddButton from "../components/buttons/AddButton";
-import HabitPopup from "../components/habits/HabitPopup";
+import HabitPopup from "../components/habits/popup/HabitPopup";
 import CardStyle from "../components/styling components/CardStyle";
 import PagesContainer from "@/components/styling components/PagesContainer";
 import HabitCard from "@/components/habits/HabitCard";
@@ -39,7 +39,12 @@ export default function Habits() {
 
       <PagesContainer>
         {/* Top section (title and stats cards) */}
-        <TopSection cards={habitCards} stats={{ ...stats }} title="Habits" classes="md:grid-cols-2">
+        <TopSection
+          cards={habitCards}
+          stats={{ ...stats }}
+          title="Habits"
+          classes="md:grid-cols-2"
+        >
           Build consistent routines and track your progress
         </TopSection>
 
