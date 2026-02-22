@@ -15,7 +15,7 @@ export default function PopupHeader({ title }) {
   // Comp structure
   return (
     <div className="flex justify-between items-center mb-7">
-      <p className="font-semibold text-lg">{title}</p>
+      <p className="font-semibold text-lg dark:text-white">{title}</p>
       <button
         className="text-neutral-700 cursor-pointer"
         onClick={handleHidePopup}

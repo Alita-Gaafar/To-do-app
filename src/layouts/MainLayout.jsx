@@ -17,7 +17,7 @@ export default function MainLayout() {
         <SidebarInset className="flex-1 flex flex-col">
           {/* Optional header inside SidebarInset */}
           <header className="fixed p-3">
-            <SidebarTrigger className="-ml-1 cursor-pointer bg-emerald-200 hover:bg-emerald-300 sm:bg-transparent " />
+            <SidebarTrigger className="-ml-1 cursor-pointer bg-emerald-200 hover:bg-emerald-300 sm:bg-transparent dark:bg-white " />
             {/* You can add Breadcrumb or other header items here */}
           </header>
 

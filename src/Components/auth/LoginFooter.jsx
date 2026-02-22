@@ -10,7 +10,7 @@ export default function LoginFooter() {
   return (
     <div className="flex justify-between mb-5">
       {/* Remember me button */}
-      <div className="">
+      <div className="dark:text-white">
         {/* Modern checkbox */}
         <div className="checkbox-wrapper-19 flex items-center">
           <input
@@ -20,14 +20,17 @@ export default function LoginFooter() {
             onChange={(e) => setRememberMe(e.target.checked)}
           />
           <label htmlFor="cbtest-19" className="check-box"></label>
-          <label htmlFor="cbtest-19" className="ms-2 text-sm sm:text-md cursor-pointer font-bold">
+          <label
+            htmlFor="cbtest-19"
+            className="ms-2 text-sm sm:text-md cursor-pointer font-bold"
+          >
             Remember me
           </label>
         </div>
       </div>
 
       {/* Forgot password button */}
-      <button className="capitalize text-emerald-600 cursor-pointer hover:text-emerald-800 duration-300 text-sm sm:text-md">
+      <button className="capitalize text-emerald-600 cursor-pointer hover:text-emerald-800 dark:hover:text-emerald-700 font-medium  duration-300 text-sm sm:text-md">
         Forgot password?
       </button>
     </div>

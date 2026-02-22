@@ -37,7 +37,7 @@ export default function Login() {
   }
   //   End of functions
   return (
-    <form action="" onSubmit={handleSignIn}>
+    <form action="" onSubmit={handleSignIn} >
       <>
         {loginInputs.map((input) => (
           <Input key={input.uniqueId} {...input} labelClass="font-bold" />

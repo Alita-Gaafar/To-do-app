@@ -27,9 +27,6 @@ import ThemeProvider from "./components/ThemeProvider";
 import ProtectedRoute from "./components/protection/ProtectedRoute";
 import PublicOnlyRoute from "./components/protection/PublicOnlyRoute";
 
-// Hooks
-import { use } from "react";
-
 // Ctx
 import AppWrapper from "./components/contexts/AppCtx";
 
@@ -64,6 +61,7 @@ function App() {
 
                     {/* Auth layout */}
                     <Route element={<AuthLayout />}>
+                      {/* Login */}
                       <Route
                         path="/login"
                         element={
@@ -72,6 +70,8 @@ function App() {
                           </PublicOnlyRoute>
                         }
                       />
+
+                      {/* Signup */}
                       <Route
                         path="/signup"
                         element={
@@ -82,7 +82,7 @@ function App() {
                       />
                     </Route>
 
-                    {/* Main layout (protected) */}
+                    {/* Main layout */}
                     <Route
                       element={
                         <ProtectedRoute>
@@ -90,9 +90,16 @@ function App() {
                         </ProtectedRoute>
                       }
                     >
+                      {/* Tasks */}
                       <Route path="/tasks" element={<Tasks />} />
+
+                      {/* Goals */}
                       <Route path="/goals" element={<Goals />} />
+
+                      {/* Habits */}
                       <Route path="/habits" element={<Habits />} />
+
+                      {/* Profile */}
                       <Route path="/profile" element={<Profile />} />
                     </Route>
                   </Routes>

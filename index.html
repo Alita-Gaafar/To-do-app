@@ -1,15 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="to-do-list.png" sizes="32x32">
+    <link rel="icon" href="to-do-list.png" sizes="32x32" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Not-yet</title>
   </head>
-  
+
   <body class="">
     <div id="modal-root"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (function () {
+        const mood = localStorage.getItem("theme");
+        const root = document.documentElement;
+        if (mood === "dark") root.classList.add("dark");
+        else root.classList.remove("dark");
+      })();
+    </script>
   </body>
 </html>
