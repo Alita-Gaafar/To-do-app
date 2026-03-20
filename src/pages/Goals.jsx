@@ -1,30 +1,21 @@
-import { use } from "react";
 import PagesContainer from "../components/styling components/PagesContainer";
 import TopSection from "../Components/TopSection";
 import { goalCards } from "@/util/data";
 import AddButton from "../components/buttons/AddButton";
 import GoalCard from "../components/goals/GoalCard";
 import CardStyle from "../components/styling components/CardStyle";
-import GoalPopup from "../components/goals/popup/GoalPopup";
 
-import { Toaster } from "@/components/ui/sonner";
-import { GoalsCtx } from "../components/contexts/GoalsContext";
+import { requireAuth } from "@/util/react-router";
+import { fetchAllData, tryAndCatch } from "@/util/http";
+import { Outlet, useLoaderData } from "react-router";
 
 export default function Goals() {
-  // -------------------- Contexts --------------------
-  const { goals, handleShowAddPopup, popupInfo } = use(GoalsCtx);
-  
-  // End of contexts
-
   // Variables
+  const allGoals = 0; // Goals number
 
-  const allGoals = goals.length; // Goals number
+  const completedGoals = 0; // Completed goals
 
-  const completedGoals = goals.filter((goal) => goal.completed).length; // Completed goals  
-
-  const allProgress = goals.reduce((all, value) => all + value.progress, 0); // All progress
-
-  const avgProgress = allProgress / allGoals || 0; // Avg progress
+  const avgProgress = 0; // Avg progress
 
   // Stats of goals
   const stats = {
@@ -35,40 +26,50 @@ export default function Goals() {
 
   // End of variables
 
+  // React router
+  const goals = useLoaderData();
+
+  const finalGoals = goals || [{ title: "test", id: 56 }];
+
+  // End of react router
+
   // Component structure
   return (
     <>
-      {/* Add popup */}
-      {popupInfo.show && (
-        <GoalPopup
-          title={popupInfo.type == "add" ? "Add New Goal" : "Edit Goal"}
-        ></GoalPopup>
-      )}
-
       {/* Page content */}
       <PagesContainer>
+        <Outlet />
+
         {/* Top section (title and stats cards) */}
-        <TopSection cards={goalCards} stats={{ ...stats }} title="Goals" classes="md:grid-cols-3">
+        <TopSection
+          cards={goalCards}
+          stats={stats}
+          title="Goals"
+          classes="md:grid-cols-3"
+        >
           Set and achieve your long-term objectives
         </TopSection>
 
         {/* Add goals button */}
-        <AddButton handleClick={handleShowAddPopup}>+ Add Goal</AddButton>
+        <AddButton path="/app/goals/new">+ Add Goal</AddButton>
 
         {/* Goal cards */}
-        {goals.length === 0 && (
-          <CardStyle title="goal" data={goals}></CardStyle>
+        {finalGoals.length === 0 && (
+          <CardStyle title="goal" data={finalGoals}></CardStyle>
         )}
-        {goals.map((goal) => (
-          <GoalCard
-            key={goal.id}
-            goalId={goal.id}
-            title={goal.title}
-            description={goal.description}
-            date={goal.date}
-          />
+
+        {finalGoals.map((goal) => (
+          <GoalCard key={goal.id} {...goal} />
         ))}
       </PagesContainer>
     </>
   );
+}
+
+export function goalsLoader() {
+  requireAuth();
+
+  // const url = ``;
+
+  // tryAndCatch(() => fetchAllData(url));
 }

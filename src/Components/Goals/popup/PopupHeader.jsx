@@ -1,27 +1,19 @@
-// Ctx
-import { GoalsCtx } from "@/components/contexts/GoalsContext";
-
 // Font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// Hooks
-import { use } from "react";
+// React router
+import { Link } from "react-router-dom";
 
-export default function PopupHeader({ title }) {
-  // -------------------- Contexts --------------------
-  const { handleHidePopup } = use(GoalsCtx);
-  // End of contexts
-
+export default function PopupHeader({ type }) {
   // Comp structure
   return (
     <div className="flex justify-between items-center mb-7">
-      <p className="font-semibold text-lg dark:text-white">{title}</p>
-      <button
-        className="text-neutral-700 cursor-pointer"
-        onClick={handleHidePopup}
-      >
+      <p className="font-semibold text-lg dark:text-white">
+        {type === "edit" ? "Edit Goals" : "Add New Goals"}
+      </p>
+      <Link to="/app/goals" className="text-neutral-700 cursor-pointer">
         <FontAwesomeIcon icon="fa-solid fa-x" size="sm" />
-      </button>
+      </Link>
     </div>
   );
 }

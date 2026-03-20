@@ -5,7 +5,8 @@ import { useTheme } from "../ThemeProvider";
 import ThemeToggle from "../ThemeToggle";
 
 // Font awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ThemeIcon from "./app theme/ThemeIcon";
+import ThemeTitle from "./app theme/ThemeTitle";
 
 export default function SettingOptions({}) {
   // States
@@ -17,28 +18,14 @@ export default function SettingOptions({}) {
     <>
       <div className="bg-neutral-50 dark:bg-neutral-900 rounded-md p-5 flex justify-between items-center mb-5">
         {/* Theme icon */}
-        <div className="flex-1 me-3">
-          {
-            <FontAwesomeIcon
-              className={theme === "light" ? "text-amber-500" : "text-blue-500"}
-              icon={
-                theme === "light" ? "fa-solid fa-sun" : "fa-regular fa-moon"
-              }
-            />
-          }
-        </div>
+        <ThemeIcon theme={theme} />
 
         {/* Theme text */}
-        <div className="flex-20">
-          <p className="mb-1 dark:text-white">Theme</p>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            {theme === "light" ? "Light Mode" : "Dark Mode"}
-          </p>
-        </div>
+        <ThemeTitle theme={theme} />
 
         {/* Theme button */}
         <div className="flex-1">
-          <ThemeToggle></ThemeToggle>
+          <ThemeToggle />
         </div>
       </div>
     </>

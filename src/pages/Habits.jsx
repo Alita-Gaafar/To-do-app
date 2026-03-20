@@ -1,41 +1,40 @@
-// Hooks
-import { use } from "react";
-
-// Ctx
-import { HabitsCtx } from "../components/contexts/HabitsCtx";
-
 // Comps
 import TopSection from "../components/TopSection";
 import { habitCards } from "@/util/data";
 import AddButton from "../components/buttons/AddButton";
-import HabitPopup from "../components/habits/popup/HabitPopup";
 import CardStyle from "../components/styling components/CardStyle";
 import PagesContainer from "@/components/styling components/PagesContainer";
-import HabitCard from "@/components/habits/HabitCard";
 import Quote from "@/components/habits/Quote";
-import StreaksChart from "@/components/habits/StreaksChart";
+import { requireAuth } from "@/util/react-router";
+import { Outlet, useLoaderData } from "react-router-dom";
+import HabitChart from "@/components/habits/HabitChart";
+import HabitsLayout from "@/components/habits/HabitsLayout";
 
 export default function Habits() {
-  // -------------------- Contexts --------------------
-  const { habits, handleShowPopup, showPopup } = use(HabitsCtx);
-  // End of contexts
+  // Variables
+  const allHabits = [].length; // All habits
 
-  // -------------------- Variables --------------------
-  const allHabits = habits.length; // All habits
-
-  const totalStreaks = habits.reduce((all, value) => all + value.streaks, 0); // Total streaks
+  const totalStreaks = 0; // Total streaks
 
   // Stats of habits
   const stats = {
     total: allHabits,
     streaks: totalStreaks,
   };
+  // End of variables.
 
-  // -------------------- Component Structure --------------------
+  // React router
+  const habits = useLoaderData();
+
+  const finalHabits = habits || [{ title: "test", id: 56, streaks: 1 }];
+
+  // End of react router
+
+  // Component Structure
   return (
     <>
       {/* Add habit popup */}
-      {showPopup && <HabitPopup />}
+      <Outlet />
 
       <PagesContainer>
         {/* Top section (title and stats cards) */}
@@ -49,41 +48,26 @@ export default function Habits() {
         </TopSection>
 
         {/* Add goals button */}
-        <AddButton handleClick={handleShowPopup}>+ Add Habit</AddButton>
+        <AddButton path="/app/habits/new">+ Add Habit</AddButton>
 
         {/* Quote */}
         <Quote />
 
         {/* Habits */}
-        {habits.length === 0 && <CardStyle data={habits} title="habit" />}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {habits.map((habit) => {
-            return (
-              <HabitCard
-                key={habit.id}
-                habitId={habit.id}
-                title={habit.title}
-                frequency={habit.frequency}
-                streaks={habit.streaks}
-                canIncrease={habit.canIncrease}
-                completed={habit.completed}
-              >
-                {habit.title}
-              </HabitCard>
-            );
-          })}
-        </div>
+        {finalHabits.length === 0 && (
+          <CardStyle data={finalHabits} title="habit" />
+        )}
+
+        {/* Habits */}
+        <HabitsLayout habits={finalHabits} />
 
         {/* Habits Chart */}
-        <div className="mt-5">
-          {habits.length > 0 && (
-            <>
-              {/* Streak chart */}
-              <StreaksChart chartData={habits} />
-            </>
-          )}
-        </div>
+        <HabitChart habits={finalHabits} />
       </PagesContainer>
     </>
   );
+}
+
+export function habitsLoader() {
+  requireAuth();
 }

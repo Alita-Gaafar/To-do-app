@@ -1,7 +1,7 @@
 import Header from "./Header";
-import StatsCard from "./StatsCard";
+import Stats from "./Stats";
 
-export default function TopSection({ children, stats, cards, title, classes }) {
+export default function TopSection({ title, children, ...props }) {
   // Comp structure
   return (
     <div className="mb-5">
@@ -9,21 +9,7 @@ export default function TopSection({ children, stats, cards, title, classes }) {
       <Header title={title}>{children}</Header>
 
       {/* Stats cards */}
-      <div className={`grid ${classes} grid-cols-1 gap-4`}>
-        {cards.map((card) => {
-          return (
-            <StatsCard
-              key={card.id}
-              icon={card.icon}
-              bgColor={card.bgColor}
-              iconColor={card.iconColor}
-              count={stats[card.condition]}
-            >
-              {card.title}
-            </StatsCard>
-          );
-        })}
-      </div>
+      <Stats {...props} />
     </div>
   );
 }

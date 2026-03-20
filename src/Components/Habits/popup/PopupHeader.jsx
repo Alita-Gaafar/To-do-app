@@ -1,20 +1,13 @@
-import { HabitsCtx } from "@/components/contexts/HabitsCtx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { use } from "react";
+import { Link } from "react-router";
 
 export default function PopupHeader() {
-  // -------------------- Contexts --------------------
-  const { handleHidePopup } = use(HabitsCtx);
-  // End of contexts
   return (
     <div className="flex justify-between items-center mb-7">
       <p className="font-semibold text-lg dark:text-white">Add New Habit</p>
-      <button
-        className="text-neutral-700 cursor-pointer"
-        onClick={handleHidePopup}
-      >
+      <Link to="/app/habits" className="text-neutral-700 cursor-pointer">
         <FontAwesomeIcon icon="fa-solid fa-x" size="sm" />
-      </button>
+      </Link>
     </div>
   );
 }

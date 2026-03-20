@@ -6,16 +6,17 @@ import { useTheme } from "./ThemeProvider";
 import { Switch } from "@/components/ui/switch";
 
 // Ctx
-import { ProfileCtx } from "./contexts/ProfileCtx";
+import { showSuccess } from "@/util/notifications";
 
-export default function ThemeToggle({}) {
+export default function ThemeToggle() {
   // States
   const { theme, toggleTheme } = useTheme();
   // End of states
 
-  // Contexts
-  const { handleSwitchTheme } = use(ProfileCtx);
-  // End of contexts
+  // Functions
+  function handleSwitchTheme() {
+    showSuccess(`Switched to ${theme} mode`);
+  }
 
   // Comp struct
   return (
@@ -25,7 +26,7 @@ export default function ThemeToggle({}) {
         id="dark-mode"
         onCheckedChange={toggleTheme}
         checked={theme === "dark" ? true : false}
-        onClick={() => handleSwitchTheme(theme)}
+        onClick={handleSwitchTheme}
       />
     </div>
   );

@@ -1,120 +1,73 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CardStyle from "../styling components/CardStyle";
-import { Progress } from "@/components/ui/progress";
-import { use, useState } from "react";
-import { GoalsCtx } from "../contexts/GoalsContext";
-import EditBtn from "../buttons/EditBtn";
-import DeleteBtn from "../buttons/DeleteBtn";
+import { useState } from "react";
 import ProgressBtn from "./ProgressBtn";
+import { goalsAction } from "@/store/goals";
+import GoalTitle from "./GoalTitle";
+import GoalDescription from "./GoalDescription";
+import GoalDate from "./GoalDate";
+import GoalProgress from "./GoalProgress";
 
 const DIVIDED_BY = 4;
 
-export default function GoalCard({ goalId, title, description, date }) {
-  // -------------------- Contexts --------------------
-  const { handleRemoveGoal, handleShowEditPopup, handleUpdateGoalState } =
-    use(GoalsCtx);
-  // End of contexts
-
+export default function GoalCard(props) {
   // States
   const [progress, setProgress] = useState(0);
   // End of states
 
-  // Variables
-
-  const today = new Date().toLocaleDateString("en-CA"); // Formatted todays date
-
-  const goalDate = date && new Date(date).toLocaleDateString("en-CA"); // Formatted goal date
-
-  const dateRange = date && goalDate >= today; // goal is in range or not
-
-  const progressState = progress == 100; // Progress is 100 or not
-
-  // Card style
-  const cardStyle = progressState
-    ? "bg-green-100"
-    : dateRange == false
-      ? "bg-red-100"
-      : "bg-white";
-
-  // End of variables
-
-  function handleIncreaseProgress(id) {
+  // Functions
+  function handleIncreaseProgress() {
     if (progress < 100) {
       setProgress((prev) => prev + 100 / DIVIDED_BY);
-
-      const updatedProgress = progress + 100 / DIVIDED_BY;
-      handleUpdateGoalState(id, updatedProgress);
     }
   }
 
-  function handleDecreaseProgress(id) {
+  function handleDecreaseProgress() {
     if (progress > 0) {
       setProgress((prev) => prev - 100 / DIVIDED_BY);
-
-      const updatedProgress = progress - 100 / DIVIDED_BY;
-      handleUpdateGoalState(id, updatedProgress);
     }
   }
 
+  // End of functions
+
   return (
-    <CardStyle classes={cardStyle}>
+    <CardStyle>
       {/* Title, description and date of the goal */}
       <div>
         {/* Title and buttons */}
-        <div className="mb-3 flex justify-between">
-          {/* Title */}
-          <p>{title}</p>
-
-          {/* Edit and delete goal buttons */}
-          <div className="flex gap-3">
-            {/* Edit button */}
-            <EditBtn
-              id={goalId}
-              handleClick={() => handleShowEditPopup(goalId)}
-            />
-
-            {/* Delete button */}
-            <DeleteBtn handleClick={() => handleRemoveGoal(goalId)}></DeleteBtn>
-          </div>
-        </div>
+        <GoalTitle title={props.title} id={props.id} />
 
         {/* Description */}
-        {description && <p className="text-neutral-600 dark:text-neutral-400 mb-3">{description}</p>}
+        <GoalDescription description={props.description} />
 
         {/* Date */}
-        {date && (
-          <p className="text-neutral-600 dark:text-neutral-400">
-            <FontAwesomeIcon className="me-1" icon="fa-regular fa-calendar" />
-            <span>Target: {date}</span>
-          </p>
-        )}
+        <GoalDate date={props.date} />
       </div>
 
       {/* Progress */}
-      <div className="my-12">
-        <div className="flex justify-between mb-3 text-neutral-600 dark:text-neutral-400">
-          <span>Progress</span>
-          <span></span>
-          {progress > 0 ? progress : 0}%
-        </div>
-        <Progress value={progress} className="w-[100%] dark:bg-neutral-600  z-1" />
-      </div>
+      <GoalProgress progress={progress} />
 
       {/* Progress buttons */}
       <div className="flex flex-col-reverse sm:flex-row justify-center sm:justify-between items-center">
         {/* Decrease progress button */}
         <ProgressBtn
           title="Decrease Progress"
-          handleClick={() => handleDecreaseProgress(goalId)}
+          handleClick={() => handleDecreaseProgress(props.id)}
         />
 
         {/* Increase progress button */}
         <ProgressBtn
           title="Increase Progress"
-          handleClick={() => handleIncreaseProgress(goalId)}
+          handleClick={() => handleIncreaseProgress(props.id)}
         />
       </div>
-      {dateRange == false && <div className="mt-5">The time is up !</div>}
     </CardStyle>
   );
+}
+
+export async function deleteGoal({ params }) {
+  const id = params.taskId;
+
+  const url = ``;
+
+  // return await tryAndCatch(() => deleteData(url));
 }

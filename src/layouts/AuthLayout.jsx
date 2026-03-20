@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+
 // Comps
 import Background from "../components/auth/Background";
 import Button from "../components/auth/Button";
@@ -6,8 +6,11 @@ import Header from "../components/auth/Header";
 
 // External data
 import { authButtons } from "@/util/data";
+import AuthForm from "@/components/auth/AuthForm";
 
 export default function AuthLayout() {
+  // const navigate = useNavigate();
+
   return (
     <>
       <section className="h-screen overflow-hidden flex justify-center items-center flex-col">
@@ -26,9 +29,10 @@ export default function AuthLayout() {
           </div>
 
           {/* Form */}
-          <Outlet />
+          <AuthForm />
         </div>
       </section>
     </>
   );
 }
+

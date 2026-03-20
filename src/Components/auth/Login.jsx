@@ -8,21 +8,17 @@ import ActionBtn from "../buttons/ActionBtn";
 
 // React router
 import { useNavigate } from "react-router";
-import { use } from "react";
-import { AppCtx } from "../contexts/AppCtx";
+import { useSelector } from "react-redux";
 
-// Variables
-const EMAIL = "abdohmahmoud28@gmail.com";
-const PASSWORD = "123456789";
 
 export default function Login() {
   // React hooks
   const navigate = useNavigate();
   // End of react hooks
 
-  // Ctx
-  const { rememberMe } = use(AppCtx);
-  // End of ctx
+  // Redux
+  const rememberMe = useSelector((state) => state.main.rememberMe);
+  // End of redux
 
   // Functions
 
@@ -33,11 +29,11 @@ export default function Login() {
     localStorage.setItem("token", "po");
     localStorage.setItem("remember", rememberMe);
 
-    navigate("/tasks?filter=all", { replace: true });
+    navigate("/tasks", { replace: true });
   }
   //   End of functions
   return (
-    <form action="" onSubmit={handleSignIn} >
+    <form action="" onSubmit={handleSignIn}>
       <>
         {loginInputs.map((input) => (
           <Input key={input.uniqueId} {...input} labelClass="font-bold" />

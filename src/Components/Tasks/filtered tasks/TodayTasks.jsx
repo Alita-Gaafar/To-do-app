@@ -1,23 +1,19 @@
-import TaskContext from "@/components/contexts/TasksContext";
+import { useRouteLoaderData } from "react-router-dom";
 import TaskCard from "../TaskCard";
 import CardStyle from "@/components/styling components/CardStyle";
-import { use } from "react";
 
 export default function TodayTasks() {
-  // Contexts
-  const { tasks } = use(TaskContext);
-  // End of contexts
+  const todayTasks = useRouteLoaderData("tasks");
 
-  // Todays tasks
-  const todaysDate = new Date().toLocaleDateString("en-CA");
-
-  const today = tasks.filter((task) => task.date === todaysDate);
+  const finalTodayTasks = todayTasks || [];
 
   // Component structure
   return (
     <div>
-      {today.length == 0 && <CardStyle title="task" data={today} />}
-      {today.map((task) => {
+      {finalTodayTasks.length == 0 && (
+        <CardStyle title="task" data={finalTodayTasks} />
+      )}
+      {finalTodayTasks.map((task) => {
         return <TaskCard key={task.id} {...task}></TaskCard>;
       })}
     </div>

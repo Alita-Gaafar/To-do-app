@@ -1,32 +1,37 @@
-import { use } from "react";
-import ActionBtn from "../buttons/ActionBtn";
-import { ProfileCtx } from "../contexts/ProfileCtx";
-import Input from "../Input";
-import { editProfileInputs } from "@/util/data";
+import { useSubmit } from "react-router";
+import EditProfileInputs from "./EditProfileInputs";
+import ProfileBtn from "./ProfileBtn";
 
 export default function EditProfile() {
-  // -------------------- Contexts --------------------
-  const { handleSaveProfile, handleShowInfo } = use(ProfileCtx);
-  // End of contexts
+  const submit = useSubmit();
+
+  function handleSubmit() {
+    submit(null, { method: "post", action: "" });
+  }
+  // Comp structure
   return (
     <>
-      <div className="w-full p-5 mb-3 shadow-sm hover:shadow-md duration-300 rounded-sm dark:bg-neutral-800">
-        {editProfileInputs.map((input) => {
-          return <Input {...input} />;
-        })}
-      </div>
+      {/* Edit profile inputs */}
+      <EditProfileInputs />
 
       <div className="w-full grid grid-cols-2 gap-3">
-        <ActionBtn handleClick={handleSaveProfile}>Save Changes</ActionBtn>
+        <ProfileBtn path="?type=info" handleSubmit={handleSubmit}>
+          Save Changes
+        </ProfileBtn>
 
         {/* Cancel edit button */}
-        <ActionBtn
-          style="bg-white text-lack hover:bg-[#e9ebef] border border-neutral-300"
-          handleClick={handleShowInfo}
+        <ProfileBtn
+          path="?type=info"
+          style="bg-white text-black hover:bg-[#e9ebef] border border-neutral-300"
         >
           Cancel
-        </ActionBtn>
+        </ProfileBtn>
       </div>
     </>
   );
+}
+
+export async function updateUserInfo() {
+  const utl = ``;
+  
 }

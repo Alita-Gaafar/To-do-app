@@ -1,39 +1,31 @@
-import { use } from "react";
-import { HabitsCtx } from "../../contexts/HabitsCtx";
-import Input from "../../Input";
-import ActionBtn from "../../buttons/ActionBtn";
+import { createPortal } from "react-dom";
 import PopupHeader from "./PopupHeader";
-import SelectFreq from "../SelectFreq";
+import HabitPopupForm from "./HabitPopupForm";
+import { addData, tryAndCatch } from "@/util/http";
+import PopupContainer from "@/components/PopupContainer";
 
-export default function HabitPopup({}) {
-  // -------------------- Contexts --------------------
-  const { handleInputChange, handleAddNewHabit } = use(HabitsCtx);
-  // End of contexts
-
-  // -------------------- Component Structure --------------------
-  return (
+export default function HabitPopup() {
+  // Component Structure
+  return createPortal(
     <div className="overlay">
-      <div className="w-140 bg-white dark:bg-black p-5 rounded-lgw-140 overflow-y-auto rounded-lg shadow-2xl">
+      <PopupContainer>
         {/* Header */}
         <PopupHeader />
 
-        <form action="" onSubmit={handleAddNewHabit}>
-          {/* Title input */}
-          <Input
-            required={true}
-            placeholder="e.g., Drink Water, Exercise"
-            title="Title"
-            name="title"
-            type="text"
-            inputClass="font-semibold text-sm"
-            labelClass="mb-3"
-            handleInputChange={handleInputChange}
-          />
-
-          {/* Add habit button */}
-          <ActionBtn>Add Habit</ActionBtn>
-        </form>
-      </div>
-    </div>
+        {/* Popup form */}
+        <HabitPopupForm />
+      </PopupContainer>
+    </div>,
+    document.getElementById("modal-root"),
   );
+}
+
+export async function addHabitsAction({ request }) {
+  const fd = await request.formData();
+  const habit = Object.fromEntries(fd);
+  // Don't forget to include the extra properties
+
+  const url = ``;
+
+  // return await tryAndCatch(() => addData(url, habit, "/app/habits"));
 }

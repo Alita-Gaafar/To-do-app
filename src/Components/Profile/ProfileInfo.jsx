@@ -3,7 +3,7 @@ import AccountStats from "./AccountStats";
 import UserInfo from "./UserInfo";
 
 export default function ProfileInfo() {
-  // -------------------- Component structure --------------------
+  // Component structure
   return (
     <>
       {/* User info */}

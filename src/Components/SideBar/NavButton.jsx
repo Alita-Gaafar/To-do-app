@@ -1,5 +1,6 @@
 import "../../util/fontAwesome.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export default function NavButton({
@@ -9,13 +10,13 @@ export default function NavButton({
   text,
   path,
 }) {
+  // Component structure
   return (
     <>
       {children}
 
       <NavLink
         to={path}
-        end
         className={({ isActive }) =>
           `
     flex w-full items-center gap-3 rounded-lg transition duration-200 mb-5 p-4

@@ -1,63 +1,71 @@
-import ActionBtn from "../../buttons/ActionBtn";
-import Input from "../../Input";
 import "../../../util/fontAwesome.js";
-// index.js or main.jsx
-
-// Hooks
-import { use } from "react";
-
-// Ctx
 
 // External data
-import { taskPopup } from "@/util/data";
 import TaskPopupHeader from "./TaskPopupHeader";
-import TaskContext from "../../contexts/TasksContext";
 import { createPortal } from "react-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
+import {
+  fetchSpecificData,
+  tryAndCatch,
+  fetchAllData,
+  addData,
+  editData,
+} from "@/util/http";
 
-export default function TaskPopup({ title }) {
-  // Contexts
-  const {
-    handleAddNewTask,
-    handleEditTask,
-    popupInfo,
-    handleInputChange,
-    taskToEdit,
-  } = use(TaskContext);
-  // End of contexts
+import TaskPopupForm from "./TaskPopupForm.jsx";
+import PopupContainer from "@/components/PopupContainer.jsx";
+
+export default function TaskPopup({ type }) {
+  // React router
+  const navigating = useNavigation();
+  const submittingState = navigating.state === "submitting";
+
+  const navigatingState = navigating.state;
+  // End of react router
+
+  // if (navigatingState) {
+  //   return <div>Please wait</div>;
+  // }
 
   // Component structure
   return createPortal(
     <div className="overlay">
-      <div className="w-140 bg-white p-8 rounded-lg dark:bg-black shadow-2xl">
+      <PopupContainer>
         {/* Header */}
-        <TaskPopupHeader title={title} />
+        <TaskPopupHeader type={type} />
 
         {/* Form */}
-        <form
-          onSubmit={
-            popupInfo.type === "add" ? handleAddNewTask : handleEditTask
-          }
-          action=""
-        >
-          {taskPopup.map((task) => (
-            <Input
-              key={task.id}
-              title={task.title}
-              type={task.type}
-              name={task.name}
-              placeholder={task.placeholder}
-              inputClass="font-semibold text-sm"
-              required={task.required}
-              dataToEdit={taskToEdit}
-              handleInputChange={handleInputChange}
-            />
-          ))}
-
-          {/* Add task button */}
-          <ActionBtn>{title}</ActionBtn>
-        </form>
-      </div>
+        <TaskPopupForm type={type} />
+      </PopupContainer>
     </div>,
     document.getElementById("modal-root"),
   );
+}
+
+export async function getTask({ params, request }) {
+  // const id = params.editId;
+  // const url = `https://api/tasks/${id}`
+  // tryAndCatch(() => fetchSpecificData(url));
+}
+
+export async function addTasksAction({ request }) {
+  const fd = await request.formData();
+  const task = Object.fromEntries(fd);
+  task.completed = false;
+  task.id = Date.now().toString();
+
+  // const url = ``;
+
+  // return await tryAndCatch(() => addData(url, task, "/app/tasks/all"));
+}
+
+export async function editTaskAction({ request, params }) {
+  const id = params.editId;
+
+  const fd = await request.formData();
+  const task = Object.fromEntries(fd);
+
+  // const url = ``;
+
+  // return await tryAndCatch(() => editData(url, task, "/app/tasks/all"));
 }

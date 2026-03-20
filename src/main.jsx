@@ -5,13 +5,12 @@ import "./index.css";
 import "./checkbox.css";
 import "./chart.css";
 
-// React router
-import { BrowserRouter } from "react-router";
-
 import App from "./App.jsx";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter basename="/To-do-app">
+  <Provider store={store}>
     <App />
-  </BrowserRouter>,
+  </Provider>,
 );

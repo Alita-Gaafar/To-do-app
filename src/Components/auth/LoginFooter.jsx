@@ -1,11 +1,18 @@
-import { use } from "react";
-import { AppCtx } from "../contexts/AppCtx";
+import { useDispatch } from "react-redux";
+import { mainAction } from "@/store";
 
 export default function LoginFooter() {
-  // Ctx
+  // Redux
+  const dispatch = useDispatch();
+  // End of redux
 
-  // End of ctx
-  const { rememberMe, setRememberMe } = use(AppCtx);
+  // Functions
+  function handleInputChange() {
+    dispatch(mainAction.toggleRememberMe());
+  }
+
+  // End of functions
+
   // Comp structure
   return (
     <div className="flex justify-between mb-5">
@@ -13,12 +20,7 @@ export default function LoginFooter() {
       <div className="dark:text-white">
         {/* Modern checkbox */}
         <div className="checkbox-wrapper-19 flex items-center">
-          <input
-            type="checkbox"
-            id="cbtest-19"
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-          />
+          <input type="checkbox" id="cbtest-19" onClick={handleInputChange} />
           <label htmlFor="cbtest-19" className="check-box"></label>
           <label
             htmlFor="cbtest-19"

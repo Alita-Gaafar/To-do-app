@@ -1,51 +1,41 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import "../../util/fontAwesome.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { use } from "react";
-import TaskContext from "../contexts/TasksContext.jsx";
 import CardStyle from "../styling components/CardStyle.jsx";
-import EditBtn from "../buttons/EditBtn.jsx";
 import DeleteBtn from "../buttons/DeleteBtn.jsx";
 import TaskCardData from "./TaskCardData.jsx";
+import TaskCheck from "./TaskCheck.jsx";
+import EditBtn from "../buttons/EditBtn.jsx";
+import { deleteData, tryAndCatch } from "@/util/http.js";
 
 export default function TaskCard({ id, completed, ...props }) {
-  // -------------------- Contexts --------------------
-  const { handleUpdateTaskState, handleRemoveTask, handleShowEditPopup } =
-    use(TaskContext);
-  // End of contexts
-
   // Component structure
   return (
     <CardStyle completed={completed}>
       <div className="flex justify-between">
-        {/* Left side */}
         <div>
-          {/* Task Check box */}
           <div className="flex mb-2 gap-2">
-            {/* You can only use normal events but onCheckedChange is better */}
-            <div className="me-3">
-              <Checkbox
-                checked={completed}
-                id="terms"
-                className="cursor-pointer dark:border-[var(--dark-border-primary-color)]"
-                onCheckedChange={() => handleUpdateTaskState(id)}
-              />
-            </div>
+            {/* Task Check box */}
+            <TaskCheck completed={completed} />
 
             {/* Task details */}
             <TaskCardData {...props} completed={completed} />
           </div>
         </div>
 
-        {/* Right side */}
         <div className="flex items-start justify-start gap-5">
           {/* Edit button */}
-          <EditBtn handleClick={() => handleShowEditPopup(id)}></EditBtn>
+          <EditBtn path={`/app/tasks/${id}/edit`}></EditBtn>
 
           {/* Delete button */}
-          <DeleteBtn handleClick={() => handleRemoveTask(id)}></DeleteBtn>
+          <DeleteBtn path={`/app/tasks/${id}/delete`} />
         </div>
       </div>
     </CardStyle>
   );
+}
+
+export async function deleteTask({ params }) {
+  const id = params.taskId;
+  const url = ``;
+
+  // return await tryAndCatch(() => deleteData(url));
 }

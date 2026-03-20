@@ -2,7 +2,8 @@
 import Header from "@/components/Header";
 import ProfileInfo from "@/components/profile/ProfileInfo";
 import PagesContainer from "@/components/styling components/PagesContainer";
-import ThemeProvider from "@/components/ThemeProvider";
+import { fetchAllData, tryAndCatch } from "@/util/http";
+import { requireAuth } from "@/util/react-router";
 
 export default function Profile() {
   return (
@@ -18,4 +19,12 @@ export default function Profile() {
       {/*  */}
     </PagesContainer>
   );
+}
+
+export function profileLoader() {
+  requireAuth();
+
+  const url = ``;
+
+  // return tryAndCatch(() => fetchAllData(url));
 }

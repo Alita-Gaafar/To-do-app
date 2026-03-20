@@ -72,10 +72,10 @@ export const habitCards = [
 ];
 
 export const taskFilterBtns = [
-  { id: 1, title: "All", value: "all" },
-  { id: 2, title: "Today", value: "today" },
-  { id: 3, title: "Completed", value: "completed" },
-  { id: 4, title: "Pending", value: "pending" },
+  { id: 1, title: "All", path: "all" },
+  { id: 2, title: "Today", path: "today" },
+  { id: 3, title: "Completed", path: "completed" },
+  { id: 4, title: "Pending", path: "pending" },
 ];
 
 export const navBtns = [
@@ -83,25 +83,25 @@ export const navBtns = [
     id: "1",
     title: "Tasks",
     faIcon: "fa-solid fa-list-check",
-    path: "/tasks",
+    path: "tasks",
   },
   {
     id: "2",
     title: "Goals",
     faIcon: "fa-solid fa-bullseye",
-    path: "/goals",
+    path: "goals",
   },
   {
     id: "3",
     title: "Habits",
     faIcon: "fa-solid fa-arrow-trend-up",
-    path: "/habits",
+    path: "habits",
   },
   {
     id: "4",
     title: "Profile",
     faIcon: "fa-regular fa-user",
-    path: "/profile",
+    path: "profile?type=info",
   },
 ];
 
@@ -151,6 +151,17 @@ export const signupInputs = [
   },
 ];
 
+export const forgetInputs = [
+  {
+    uniqueId: 1,
+    type: "email",
+    name: "email",
+    title: "Email",
+    required: true,
+    placeholder: "email",
+  },
+];
+
 export const editProfileInputs = [
   {
     uniqueId: 1,
@@ -159,7 +170,7 @@ export const editProfileInputs = [
     title: "Name",
     required: true,
     placeholder: "name",
-    icon:"fa-regular fa-user",
+    icon: "fa-regular fa-user",
     inputClass: "mb-3",
   },
   {
@@ -169,7 +180,7 @@ export const editProfileInputs = [
     title: "email",
     required: true,
     placeholder: "email",
-    icon:"fa-regular fa-envelope",
+    icon: "fa-regular fa-envelope",
     inputClass: "mb-3",
   },
 ];

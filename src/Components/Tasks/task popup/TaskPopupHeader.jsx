@@ -1,26 +1,22 @@
-import TaskContext from "@/components/contexts/TasksContext";
+import { tasksAction } from "@/store/tasks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { use } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLoaderData } from "react-router-dom";
 
-export default function TaskPopupHeader({ title }) {
-  // Contexts
-  const { handleHidePopup } = use(TaskContext);
-  // End of contexts
-
+export default function TaskPopupHeader({ type }) {
   // Comp structure
   return (
     <div className="flex justify-between items-center mb-7">
-      <p className="font-semibold text-lg dark:text-white">{title}</p>
-      <button
-        className="text-neutral-700 cursor-pointer"
-        onClick={handleHidePopup}
-      >
+      <p className="font-semibold text-lg dark:text-white">
+        {type === "edit" ? "Edit Tasks" : "Add New Tasks"}
+      </p>
+      <Link to="/app/tasks" className="text-neutral-700 cursor-pointer">
         <FontAwesomeIcon
           className="dark:text-[var(--dark-text-primary-color)]"
           icon="fa-solid fa-x"
           size="sm"
         />
-      </button>
+      </Link>
     </div>
   );
 }

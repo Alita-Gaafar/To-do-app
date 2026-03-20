@@ -1,21 +1,20 @@
-import { use } from "react";
-import TaskContext from "@/components/contexts/TasksContext";
 import CardStyle from "@/components/styling components/CardStyle";
 import TaskCard from "../TaskCard";
+import { useRouteLoaderData } from "react-router";
 
 export default function CompletedTasks() {
-  // Contexts
-  const { tasks, completedTasks } = use(TaskContext);
-  // End of contexts
+  const completedTasks = useRouteLoaderData("tasks");
+
+  const finalCompletedTasks = completedTasks || [];
 
   // Component structure
   return (
     <div>
       <>
-        {completedTasks.length === 0 && (
-          <CardStyle title="task" data={completedTasks} />
+        {finalCompletedTasks.length === 0 && (
+          <CardStyle title="task" data={finalCompletedTasks} />
         )}
-        {completedTasks.map((task) => {
+        {finalCompletedTasks.map((task) => {
           return <TaskCard key={task.id} {...task}></TaskCard>;
         })}
       </>
