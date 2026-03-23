@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { tasksReducer } from "./tasks";
 import { goalsReducer } from "./goals";
 import { habitsReducer } from "./habits";
+import { authReducer } from "./auth";
 
 const mainInitialState = { rememberMe: false };
 
@@ -21,6 +22,7 @@ export const store = configureStore({
     tasks: tasksReducer,
     goals: goalsReducer,
     habits: habitsReducer,
+    auth: authReducer,
   },
 });
 

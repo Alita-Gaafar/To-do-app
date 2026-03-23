@@ -162,6 +162,38 @@ export const forgetInputs = [
   },
 ];
 
+export const inputProps = {
+  title: "Email Address",
+  placeholder: "email",
+  labelClass: "font-semibold",
+  type: "email",
+  required: true,
+};
+
+export const codeInputProps = {
+  title: "Verification Code",
+  placeholder: "Enter 6-digit code",
+  labelClass: "font-semibold",
+  type: "number",
+  required: true,
+};
+
+export const newPassword = {
+  title: "New Password",
+  placeholder: "Enter new password",
+  labelClass: "font-semibold",
+  type: "password",
+  required: true,
+};
+
+export const confirmNewPassword = {
+  title: "Confirm Password",
+  placeholder: "Confirm new password",
+  labelClass: "font-semibold",
+  type: "password",
+  required: true,
+};
+
 export const editProfileInputs = [
   {
     uniqueId: 1,

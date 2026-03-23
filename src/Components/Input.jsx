@@ -20,6 +20,7 @@ export default function Input(props) {
         )}
         {/* Input */}
         <input
+          ref={props.ref && props.ref}
           defaultValue={props.dataToEdit?.[props.name]}
           // onChange={(e) =>
           //   props.handleInputChange && props.handleInputChange(e, props.name)
@@ -28,7 +29,7 @@ export default function Input(props) {
           required={props.required}
           type={props.type}
           id={props.name}
-          placeholder={`Enter your ${props.placeholder || "..."}`}
+          placeholder={`${props.placeholder || "..."}`}
           className={`${
             props.icon && "ps-10"
           } input-focus px-4 py-3 w-full rounded-sm duration-300 bg-[#f3f3f5] dark:bg-neutral-900 dark:text-[var(--dark-text-primary-color)]`}

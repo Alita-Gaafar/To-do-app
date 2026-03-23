@@ -1,12 +1,9 @@
-
 // Comps
 import Background from "../components/auth/Background";
-import Button from "../components/auth/Button";
 import Header from "../components/auth/Header";
 
-// External data
-import { authButtons } from "@/util/data";
-import AuthForm from "@/components/auth/AuthForm";
+// React router
+import { Outlet } from "react-router";
 
 export default function AuthLayout() {
   // const navigate = useNavigate();
@@ -20,19 +17,12 @@ export default function AuthLayout() {
         {/* Background image */}
         <Background />
 
-        {/* Buttons to navigate between sign in and sign up pages */}
+        
         <div className="sm:w-110 w-11/12 bg-white/95 p-5 sm:p-10 rounded-2xl dark:bg-neutral-800">
-          <div className="flex justify-between gap-2 mb-5">
-            {authButtons.map((btn) => (
-              <Button key={btn.id} title={btn.title} path={btn.path} />
-            ))}
-          </div>
-
-          {/* Form */}
-          <AuthForm />
+          {/* Child path */}
+          <Outlet />
         </div>
       </section>
     </>
   );
 }
-

@@ -1,9 +1,15 @@
-import { Form, redirect, useNavigation, useSearchParams } from "react-router-dom";
+import {
+  Form,
+  redirect,
+  useNavigation,
+  useSearchParams,
+} from "react-router-dom";
 import Input from "../Input";
 import { loginInputs, signupInputs } from "@/util/data";
 import ActionBtn from "../buttons/ActionBtn";
 import { useEffect } from "react";
 import LoginFooter from "./LoginFooter";
+import AuthNavBtns from "./AuthNavBtns";
 
 export default function AuthForm() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,17 +27,27 @@ export default function AuthForm() {
   }, []);
 
   return (
-    <Form method="post">
-      {inputs.map((input) => {
-        return <Input key={input.uniqueId} {...input} labelClass="font-bold" />;
-      })}
+    <>
+      {/* Buttons to navigate between sign in and sign up pages */}
+      <AuthNavBtns />
 
-      {/* Footer */}
-      {isLogin && <LoginFooter />}
+      {/* Auth form */}
+      <Form method="post">
+        {inputs.map((input) => {
+          return (
+            <Input key={input.uniqueId} {...input} labelClass="font-bold" />
+          );
+        })}
 
-      {/* Signup button */}
-      <ActionBtn fallback="Loading..." state={state}>{isLogin ? "Login" : "Signup"}</ActionBtn>
-    </Form>
+        {/* Footer */}
+        {isLogin && <LoginFooter />}
+
+        {/* Signup button */}
+        <ActionBtn fallback="Loading..." state={state}>
+          {isLogin ? "Login" : "Signup"}
+        </ActionBtn>
+      </Form>
+    </>
   );
 }
 

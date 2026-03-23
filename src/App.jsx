@@ -34,7 +34,7 @@ import { deleteTask } from "./components/tasks/TaskCard";
 // Error
 import Error from "./pages/Error";
 
-import { authAction } from "./components/auth/AuthForm";
+import AuthForm, { authAction } from "./components/auth/AuthForm";
 
 // Goals comps
 import GoalPopup, {
@@ -49,6 +49,9 @@ import HabitPopup, {
 // Habits comps
 import { deleteHabit } from "./components/habits/HabitCard";
 import { updateUserInfo } from "./components/profile/EditProfile";
+import ConfirmResetCode from "./components/auth/Forget password/ConfirmResetCode";
+import RequestPasswordReset from "./components/auth/Forget password/RequestPasswordReset";
+import ChangePassword from "./components/auth/Forget password/ChangePassword";
 
 // Routes
 const router = createBrowserRouter([
@@ -57,6 +60,21 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     element: <AuthLayout />,
     action: authAction,
+    children: [
+      { index: true, element: <AuthForm /> },
+      {
+        path: "confirm-email",
+        element: <RequestPasswordReset />,
+      },
+      {
+        path: "verify-email",
+        element: <ConfirmResetCode />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePassword />,
+      },
+    ],
   },
   {
     path: "app",

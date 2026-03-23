@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { mainAction } from "@/store";
+import { Link } from "react-router-dom";
 
 export default function LoginFooter() {
   // Redux
@@ -32,9 +33,12 @@ export default function LoginFooter() {
       </div>
 
       {/* Forgot password button */}
-      <button className="capitalize text-emerald-600 cursor-pointer hover:text-emerald-800 dark:hover:text-emerald-700 font-medium  duration-300 text-sm sm:text-md">
+      <Link
+        to="confirm-email"
+        className="capitalize text-emerald-600 cursor-pointer hover:text-emerald-800 dark:hover:text-emerald-700 font-medium  duration-300 text-sm sm:text-md"
+      >
         Forgot password?
-      </button>
+      </Link>
     </div>
   );
 }
