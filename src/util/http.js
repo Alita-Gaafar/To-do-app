@@ -9,7 +9,7 @@ export async function tryAndCatch(httpFn) {
     return res;
   } catch (error) {
     throw new Response(JSON.stringify({ message: "Server error" }), {
-      status: 505,
+      status: 500,
     });
   }
 }

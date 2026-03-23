@@ -1,4 +1,4 @@
-import CardStyle from "../styling components/CardStyle";
+import CardStyle from "../styling-components/CardStyle";
 import { useState } from "react";
 import ProgressBtn from "./ProgressBtn";
 import { goalsAction } from "@/store/goals";

@@ -2,8 +2,8 @@
 import TopSection from "../components/TopSection";
 import { habitCards } from "@/util/data";
 import AddButton from "../components/buttons/AddButton";
-import CardStyle from "../components/styling components/CardStyle";
-import PagesContainer from "@/components/styling components/PagesContainer";
+import CardStyle from "../components/styling-components/CardStyle";
+import PagesContainer from "@/components/styling-components/PagesContainer";
 import Quote from "@/components/habits/Quote";
 import { requireAuth } from "@/util/react-router";
 import { Outlet, useLoaderData } from "react-router-dom";

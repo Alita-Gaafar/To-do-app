@@ -72,7 +72,7 @@ export const habitCards = [
 ];
 
 export const taskFilterBtns = [
-  { id: 1, title: "All", path: "all" },
+  { id: 1, title: "All", path: "" },
   { id: 2, title: "Today", path: "today" },
   { id: 3, title: "Completed", path: "completed" },
   { id: 4, title: "Pending", path: "pending" },

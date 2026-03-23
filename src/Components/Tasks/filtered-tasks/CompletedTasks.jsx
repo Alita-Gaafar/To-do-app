@@ -1,4 +1,4 @@
-import CardStyle from "@/components/styling components/CardStyle";
+import CardStyle from "@/components/styling-components/CardStyle";
 import TaskCard from "../TaskCard";
 import { useRouteLoaderData } from "react-router";
 

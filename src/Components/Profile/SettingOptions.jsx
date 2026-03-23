@@ -5,8 +5,8 @@ import { useTheme } from "../ThemeProvider";
 import ThemeToggle from "../ThemeToggle";
 
 // Font awesome
-import ThemeIcon from "./app theme/ThemeIcon";
-import ThemeTitle from "./app theme/ThemeTitle";
+import ThemeIcon from "./app-theme/ThemeIcon";
+import ThemeTitle from "./app-theme/ThemeTitle";
 
 export default function SettingOptions({}) {
   // States

@@ -3,7 +3,7 @@ import EditProfile from "./EditProfile";
 import UserData from "./UserData";
 
 // Styling
-import CardStyle from "../styling components/CardStyle";
+import CardStyle from "../styling-components/CardStyle";
 import { useSearchParams } from "react-router";
 import UserNameShortcut from "./UserNameShortCut";
 

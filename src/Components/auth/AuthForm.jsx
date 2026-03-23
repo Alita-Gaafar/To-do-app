@@ -70,7 +70,7 @@ export async function authAction({ params, request }) {
   //   throw new Response(JSON.stringify({ message: "Failed" }), {
   //     status: 401,
   //   });
-  // }
+  // }  
 
   localStorage.setItem("token", "123456");
   return redirect("/app/tasks");

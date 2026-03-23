@@ -1,5 +1,5 @@
 // Comps
-import PagesContainer from "../components/styling components/PagesContainer";
+import PagesContainer from "../components/styling-components/PagesContainer";
 import TopSection from "../components/TopSection";
 
 // External data
@@ -31,34 +31,31 @@ export default function Tasks() {
 
   // Component structure
   return (
-    <>
-      {/* Task page */}
-      <PagesContainer>
-        {/* Header of the section task */}
-        <TopSection
-          cards={taskCards}
-          stats={{ ...stats }}
-          title="Tasks"
-          classes="md:grid-cols-3"
-        >
-          Stay organized and productive
-        </TopSection>
+    <PagesContainer>
+      {/* Header of the section task */}
+      <TopSection
+        cards={taskCards}
+        stats={stats}
+        title="Tasks"
+        classes="md:grid-cols-3"
+      >
+        Stay organized and productive
+      </TopSection>
 
-        {/* Task filter and add buttons*/}
-        <div className="md:flex justify-between my-5">
-          {/* Task filter */}
-          <TaskFilter />
+      {/* Task filter and add buttons*/}
+      <div className="md:flex justify-between my-5">
+        {/* Task filter */}
+        <TaskFilter />
 
-          {/* Add task button */}
-          <AddButton path="/app/tasks/new">+ Add Task</AddButton>
-        </div>
+        {/* Add task button */}
+        <AddButton path="/app/tasks/new">+ Add Task</AddButton>
+      </div>
 
-        {/* Quote */}
-        <Quote />
+      {/* Quote */}
+      <Quote />
 
-        <Outlet />
-      </PagesContainer>
-    </>
+      <Outlet />
+    </PagesContainer>
   );
 }
 
@@ -68,5 +65,3 @@ export async function tasksLoader() {
   requireAuth();
   // return tryAndCatch(() => fetchAllData(url));
 }
-
-

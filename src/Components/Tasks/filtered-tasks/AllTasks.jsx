@@ -1,5 +1,5 @@
 import TaskCard from "../TaskCard";
-import CardStyle from "@/components/styling components/CardStyle";
+import CardStyle from "@/components/styling-components/CardStyle";
 import { useRouteLoaderData } from "react-router";
 
 export default function AllTasks() {

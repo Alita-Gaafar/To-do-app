@@ -1,5 +1,5 @@
 import "../../util/fontAwesome.js";
-import CardStyle from "../styling components/CardStyle.jsx";
+import CardStyle from "../styling-components/CardStyle.jsx";
 import DeleteBtn from "../buttons/DeleteBtn.jsx";
 import TaskCardData from "./TaskCardData.jsx";
 import TaskCheck from "./TaskCheck.jsx";

@@ -1,7 +1,7 @@
 import "../../../util/fontAwesome.js";
 
 // External data
-import TaskPopupHeader from "./TaskPopupHeader";
+import TaskPopupHeader from "./TaskPopupHeader.jsx";
 import { createPortal } from "react-dom";
 import { useLoaderData, useNavigation } from "react-router-dom";
 import {

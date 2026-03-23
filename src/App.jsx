@@ -1,10 +1,4 @@
-// Comps
-import Tasks, { tasksLoader } from "./pages/Tasks";
-
 // Pages
-import Goals, { goalsLoader } from "./pages/Goals";
-import Habits, { habitsLoader } from "./pages/Habits";
-import Profile, { profileLoader } from "./pages/Profile";
 import { logoutAction } from "./pages/Logout";
 
 // Shadcn
@@ -20,21 +14,19 @@ import AuthLayout from "./layouts/AuthLayout";
 import ThemeProvider from "./components/ThemeProvider";
 
 // Tasks comps
-import AllTasks from "./components/tasks/filtered tasks/AllTasks";
-import CompletedTasks from "./components/tasks/filtered tasks/CompletedTasks";
-import PendingTasks from "./components/tasks/filtered tasks/PendingTasks";
-import TodayTasks from "./components/tasks/filtered tasks/TodayTasks";
+import AllTasks from "./components/tasks/filtered-tasks/AllTasks";
+import CompletedTasks from "./components/tasks/filtered-tasks/CompletedTasks";
+import PendingTasks from "./components/tasks/filtered-tasks/PendingTasks";
+import TodayTasks from "./components/tasks/filtered-tasks/TodayTasks";
 import TaskPopup, {
   addTasksAction,
   editTaskAction,
   getTask,
-} from "./components/tasks/task popup/TaskPopup";
+} from "./components/tasks/task-popup/TaskPopup";
 import { deleteTask } from "./components/tasks/TaskCard";
 
 // Error
 import Error from "./pages/Error";
-
-import AuthForm, { authAction } from "./components/auth/AuthForm";
 
 // Goals comps
 import GoalPopup, {
@@ -48,20 +40,28 @@ import HabitPopup, {
 
 // Habits comps
 import { deleteHabit } from "./components/habits/HabitCard";
-import { updateUserInfo } from "./components/profile/EditProfile";
-import ConfirmResetCode from "./components/auth/Forget password/ConfirmResetCode";
-import RequestPasswordReset from "./components/auth/Forget password/RequestPasswordReset";
-import ChangePassword from "./components/auth/Forget password/ChangePassword";
+import ConfirmResetCode from "./components/auth/Forget-password/ConfirmResetCode";
+import RequestPasswordReset from "./components/auth/Forget-password/RequestPasswordReset";
+import ChangePassword from "./components/auth/Forget-password/ChangePassword";
 
 // Routes
 const router = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     errorElement: <Error />,
     element: <AuthLayout />,
-    action: authAction,
+
     children: [
-      { index: true, element: <AuthForm /> },
+      {
+        index: true,
+        lazy: async () => {
+          const module = await import("./components/auth/AuthForm");
+          return {
+            Component: module.default,
+            action: module.authAction,
+          };
+        },
+      },
       {
         path: "confirm-email",
         element: <RequestPasswordReset />,
@@ -79,15 +79,21 @@ const router = createBrowserRouter([
   {
     path: "app",
     element: <MainLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: "tasks",
-        element: <Tasks />,
-        loader: tasksLoader,
+        lazy: async () => {
+          const module = await import("./pages/Tasks");
+          return {
+            Component: module.default,
+            loader: module.tasksLoader,
+          };
+        },
         id: "tasks",
         children: [
           {
-            path: "all",
+            index: true,
             element: <AllTasks />,
           },
           {
@@ -111,7 +117,6 @@ const router = createBrowserRouter([
             path: ":editId/edit",
             loader: getTask,
             action: editTaskAction,
-            errorElement: <Error />,
             element: <TaskPopup type="edit" />,
           },
           { path: ":taskId/delete", action: deleteTask },
@@ -119,8 +124,14 @@ const router = createBrowserRouter([
       },
       {
         path: "goals",
-        loader: goalsLoader,
-        element: <Goals />,
+        lazy: async () => {
+          const module = await import("./pages/Goals");
+
+          return {
+            Component: module.default,
+            loader: module.goalsLoader,
+          };
+        },
         children: [
           {
             path: "new",
@@ -138,8 +149,14 @@ const router = createBrowserRouter([
       },
       {
         path: "habits",
-        loader: habitsLoader,
-        element: <Habits />,
+        lazy: async () => {
+          const module = await import("./pages/Habits");
+
+          return {
+            Component: module.default,
+            loader: module.habitsLoader,
+          };
+        },
         children: [
           {
             path: "new",
@@ -151,9 +168,15 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        loader: profileLoader,
-        action: updateUserInfo,
-        element: <Profile />,
+        lazy: async () => {
+          const module = await import("./pages/Profile");
+
+          return {
+            Component: module.default,
+            loader: module.profileLoader,
+            action: module.updateUserInfo,
+          };
+        },
       },
     ],
   },
@@ -164,15 +187,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // Component structure
   return (
-    <>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+    <ThemeProvider>
+      <RouterProvider router={router} />
 
       <Toaster />
-    </>
+    </ThemeProvider>
   );
 }
 

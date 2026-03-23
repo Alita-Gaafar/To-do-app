@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "react-router-dom";
 import TaskCard from "../TaskCard";
-import CardStyle from "@/components/styling components/CardStyle";
+import CardStyle from "@/components/styling-components/CardStyle";
 
 export default function TodayTasks() {
   const todayTasks = useRouteLoaderData("tasks");

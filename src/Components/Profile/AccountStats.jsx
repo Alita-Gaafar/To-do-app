@@ -1,4 +1,4 @@
-import CardStyle from "../styling components/CardStyle";
+import CardStyle from "../styling-components/CardStyle";
 import StatsCard from "./StatsCard";
 
 export default function AccountStats() {

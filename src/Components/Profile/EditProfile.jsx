@@ -31,7 +31,4 @@ export default function EditProfile() {
   );
 }
 
-export async function updateUserInfo() {
-  const utl = ``;
-  
-}
+

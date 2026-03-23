@@ -1,5 +1,5 @@
 // Styling
-import CardStyle from "../styling components/CardStyle";
+import CardStyle from "../styling-components/CardStyle";
 
 // Comps
 import SettingOptions from "./SettingOptions";

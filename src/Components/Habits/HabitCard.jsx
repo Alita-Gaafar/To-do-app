@@ -1,5 +1,5 @@
 // Comps
-import CardStyle from "../styling components/CardStyle";
+import CardStyle from "../styling-components/CardStyle";
 
 import { deleteData, tryAndCatch } from "@/util/http";
 import HabitTitle from "./HabitTitle";

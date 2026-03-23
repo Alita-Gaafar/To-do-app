@@ -1,9 +1,9 @@
-import PagesContainer from "../components/styling components/PagesContainer";
+import PagesContainer from "../components/styling-components/PagesContainer";
 import TopSection from "../Components/TopSection";
 import { goalCards } from "@/util/data";
 import AddButton from "../components/buttons/AddButton";
 import GoalCard from "../components/goals/GoalCard";
-import CardStyle from "../components/styling components/CardStyle";
+import CardStyle from "../components/styling-components/CardStyle";
 
 import { requireAuth } from "@/util/react-router";
 import { fetchAllData, tryAndCatch } from "@/util/http";
