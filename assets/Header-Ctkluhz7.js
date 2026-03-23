@@ -1,0 +1,1 @@
+import{D as e,V as t}from"./index-eQ1MyBp1.js";var n=t(e(),1);function r({children:e,title:t}){return(0,n.jsxs)(`div`,{className:`mb-10`,children:[(0,n.jsxs)(`p`,{className:`font-semibold text-2xl mb-2 dark:text-white`,children:[`My `,t]}),(0,n.jsx)(`p`,{className:`text-neutral-700 dark:text-[var(--dark-text-primary-color)]`,children:e})]})}export{r as t};

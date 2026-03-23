@@ -1,1 +1,0 @@
-import{A as e,D as t,V as n}from"./index-8hcKE6DW.js";var r=n(t(),1);function i({children:t,path:n}){return(0,r.jsx)(`div`,{children:(0,r.jsx)(e,{to:n,className:`py-2.5 px-4 bg-black text-white rounded-lg cursor-pointer duration-300 hover:bg-[#000000e0] dark:bg-white dark:text-black`,children:t})})}export{i as t};

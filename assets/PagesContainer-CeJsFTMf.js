@@ -1,0 +1,1 @@
+import{D as e,N as t,V as n}from"./index-eQ1MyBp1.js";function r(){return localStorage.getItem(`token`)}function i(){let e=r();if(!e)throw t(`/`);return e}var a=n(e(),1);function o({children:e}){return(0,a.jsx)(`div`,{className:`flex-2 ml-0 min-h-screen bg-neutral-50 px-5 py-5 md:py-10 md:px-20 dark:bg-neutral-900`,children:e})}export{i as n,o as t};
