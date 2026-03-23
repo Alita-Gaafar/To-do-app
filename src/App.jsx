@@ -45,146 +45,149 @@ import RequestPasswordReset from "./components/auth/Forget-password/RequestPassw
 import ChangePassword from "./components/auth/Forget-password/ChangePassword";
 
 // Routes
-const router = createBrowserRouter([
-  {
-    path: "/",
-    errorElement: <Error />,
-    element: <AuthLayout />,
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      errorElement: <Error />,
+      element: <AuthLayout />,
 
-    children: [
-      {
-        index: true,
-        lazy: async () => {
-          const module = await import("./components/auth/AuthForm");
-          return {
-            Component: module.default,
-            action: module.authAction,
-          };
+      children: [
+        {
+          index: true,
+          lazy: async () => {
+            const module = await import("./components/auth/AuthForm");
+            return {
+              Component: module.default,
+              action: module.authAction,
+            };
+          },
         },
-      },
-      {
-        path: "confirm-email",
-        element: <RequestPasswordReset />,
-      },
-      {
-        path: "verify-email",
-        element: <ConfirmResetCode />,
-      },
-      {
-        path: "change-password",
-        element: <ChangePassword />,
-      },
-    ],
-  },
-  {
-    path: "app",
-    element: <MainLayout />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "tasks",
-        lazy: async () => {
-          const module = await import("./pages/Tasks");
-          return {
-            Component: module.default,
-            loader: module.tasksLoader,
-          };
+        {
+          path: "confirm-email",
+          element: <RequestPasswordReset />,
         },
-        id: "tasks",
-        children: [
-          {
-            index: true,
-            element: <AllTasks />,
+        {
+          path: "verify-email",
+          element: <ConfirmResetCode />,
+        },
+        {
+          path: "change-password",
+          element: <ChangePassword />,
+        },
+      ],
+    },
+    {
+      path: "app",
+      element: <MainLayout />,
+      errorElement: <Error />,
+      children: [
+        {
+          path: "tasks",
+          lazy: async () => {
+            const module = await import("./pages/Tasks");
+            return {
+              Component: module.default,
+              loader: module.tasksLoader,
+            };
           },
-          {
-            path: "completed",
-            element: <CompletedTasks />,
-          },
-          {
-            path: "pending",
-            element: <PendingTasks />,
-          },
-          {
-            path: "today",
-            element: <TodayTasks />,
-          },
-          {
-            path: "new",
-            action: addTasksAction,
-            element: <TaskPopup type="add" />,
-          },
-          {
-            path: ":editId/edit",
-            loader: getTask,
-            action: editTaskAction,
-            element: <TaskPopup type="edit" />,
-          },
-          { path: ":taskId/delete", action: deleteTask },
-        ],
-      },
-      {
-        path: "goals",
-        lazy: async () => {
-          const module = await import("./pages/Goals");
+          id: "tasks",
+          children: [
+            {
+              index: true,
+              element: <AllTasks />,
+            },
+            {
+              path: "completed",
+              element: <CompletedTasks />,
+            },
+            {
+              path: "pending",
+              element: <PendingTasks />,
+            },
+            {
+              path: "today",
+              element: <TodayTasks />,
+            },
+            {
+              path: "new",
+              action: addTasksAction,
+              element: <TaskPopup type="add" />,
+            },
+            {
+              path: ":editId/edit",
+              loader: getTask,
+              action: editTaskAction,
+              element: <TaskPopup type="edit" />,
+            },
+            { path: ":taskId/delete", action: deleteTask },
+          ],
+        },
+        {
+          path: "goals",
+          lazy: async () => {
+            const module = await import("./pages/Goals");
 
-          return {
-            Component: module.default,
-            loader: module.goalsLoader,
-          };
+            return {
+              Component: module.default,
+              loader: module.goalsLoader,
+            };
+          },
+          children: [
+            {
+              path: "new",
+              action: addGoalsAction,
+              element: <GoalPopup type="add" />,
+            },
+            {
+              path: ":editGoalId/edit",
+              action: editGoalAction,
+              errorElement: <Error />,
+              element: <GoalPopup type="edit" />,
+            },
+            { path: ":goalId/delete", action: deleteGoal },
+          ],
         },
-        children: [
-          {
-            path: "new",
-            action: addGoalsAction,
-            element: <GoalPopup type="add" />,
-          },
-          {
-            path: ":editGoalId/edit",
-            action: editGoalAction,
-            errorElement: <Error />,
-            element: <GoalPopup type="edit" />,
-          },
-          { path: ":goalId/delete", action: deleteGoal },
-        ],
-      },
-      {
-        path: "habits",
-        lazy: async () => {
-          const module = await import("./pages/Habits");
+        {
+          path: "habits",
+          lazy: async () => {
+            const module = await import("./pages/Habits");
 
-          return {
-            Component: module.default,
-            loader: module.habitsLoader,
-          };
-        },
-        children: [
-          {
-            path: "new",
-            action: addHabitsAction,
-            element: <HabitPopup />,
+            return {
+              Component: module.default,
+              loader: module.habitsLoader,
+            };
           },
-          { path: ":habitId/delete", action: deleteHabit },
-        ],
-      },
-      {
-        path: "profile",
-        lazy: async () => {
-          const module = await import("./pages/Profile");
-
-          return {
-            Component: module.default,
-            loader: module.profileLoader,
-            action: module.updateUserInfo,
-          };
+          children: [
+            {
+              path: "new",
+              action: addHabitsAction,
+              element: <HabitPopup />,
+            },
+            { path: ":habitId/delete", action: deleteHabit },
+          ],
         },
-      },
-    ],
-  },
-  {
-    path: "logout",
-    action: logoutAction,
-  },
-]);
+        {
+          path: "profile",
+          lazy: async () => {
+            const module = await import("./pages/Profile");
+
+            return {
+              Component: module.default,
+              loader: module.profileLoader,
+              action: module.updateUserInfo,
+            };
+          },
+        },
+      ],
+    },
+    {
+      path: "logout",
+      action: logoutAction,
+    },
+  ],
+  { basename: "/to-do-app" },
+);
 
 function App() {
   return (
